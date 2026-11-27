@@ -12,20 +12,22 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
   <style>
     :root {
-      --bg: #eef2f6;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --surface-alt: #f8fafc;
+      --surface-soft: #f8fafc;
       --ink: #0f172a;
       --muted: #475569;
-      --primary: #1d4ed8;
-      --primary-dark: #1e3a8a;
-      --primary-soft: #dbeafe;
-      --accent: #0d9488;
-      --accent-soft: #ccfbf1;
-      --line: #cbd5e1;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
+      --primary: #2563eb;
+      --primary-deep: #1e3a8a;
+      --primary-tint: #eff6ff;
+      --teal: #0d9488;
+      --teal-tint: #f0fdfa;
+      --border: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 25px rgba(15, 23, 42, 0.08);
+      --r-xl: 22px;
+      --r-lg: 16px;
+      --r-md: 12px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,18 +40,19 @@
       min-height: 100vh;
     }
 
-    .topbar {
-      background: #ffffff;
-      border-bottom: 1px solid var(--line);
+    .nav-wrap {
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .topbar-inner {
-      max-width: 1120px;
+    .nav-inner {
+      max-width: 1140px;
       margin: 0 auto;
-      padding: 0.8rem 1rem;
+      padding: 0.75rem 1rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -57,227 +60,320 @@
       gap: 0.75rem;
     }
 
-    .brand {
-      font-weight: 800;
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 900;
       font-size: 1.08rem;
-      color: var(--primary-dark);
+      color: var(--primary-deep);
       text-decoration: none;
     }
 
-    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
 
-    nav button {
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
+    .menu-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .menu-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
       color: var(--ink);
-      padding: 0.42rem 0.78rem;
-      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--r-md);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .menu-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-btn.is-active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-shell {
+      max-width: 1140px;
+      margin: 1.25rem auto 0;
+      padding: 0 1rem;
+    }
+
+    .hero-card {
+      background: linear-gradient(130deg, #0f172a 0%, #1d4ed8 55%, #0f766e 100%);
+      color: #ffffff;
+      border-radius: var(--r-xl);
+      padding: 1.9rem 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-pill {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.2rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-card h1 {
+      font-size: 1.58rem;
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-card p {
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.95rem;
+      max-width: 760px;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 1.4rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .section-panel {
+      display: none;
+    }
+
+    .section-panel.is-visible {
+      display: block;
+    }
+
+    .heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .heading-row h2 {
+      font-size: 1.22rem;
+      font-weight: 800;
+    }
+
+    .grades-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .grade-tile {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 0.95rem 1rem;
+      text-align: right;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .grade-tile:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .grade-tile.is-selected {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .grade-tile .g-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .grade-tile .g-meta {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      font-weight: 600;
+    }
+
+    .workspace-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 1.3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .workspace-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .workspace-top h3 {
+      font-size: 1.16rem;
+      font-weight: 800;
+      color: var(--primary-deep);
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--primary-tint);
+      color: var(--primary-deep);
+      border: 1px solid #bfdbfe;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-inline-start: 0.35rem;
+    }
+
+    .chip.teal {
+      background: var(--teal-tint);
+      color: #115e59;
+      border-color: #99f6e4;
+    }
+
+    .sub-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .sub-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--ink);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--r-md);
       font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
     }
 
-    nav button.active {
-      background: var(--primary);
-      border-color: var(--primary);
+    .sub-btn.is-active {
+      background: var(--teal);
+      border-color: var(--teal);
       color: #ffffff;
     }
 
-    .hero {
-      max-width: 1120px;
-      margin: 1.4rem auto 0;
-      padding: 0 1rem;
-    }
-
-    .hero-box {
-      background: linear-gradient(125deg, #0f172a 0%, #1e3a8a 60%, #0f766e 100%);
-      color: #ffffff;
-      border-radius: var(--radius-lg);
-      padding: 1.8rem 1.5rem;
-    }
-
-    .hero-box h1 { font-size: 1.6rem; margin-bottom: 0.45rem; }
-    .hero-box p { color: rgba(255, 255, 255, 0.92); font-size: 0.96rem; }
-
-    main {
-      max-width: 1120px;
-      margin: 1.5rem auto 2rem;
-      padding: 0 1rem;
-    }
-
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .section-head h2 { font-size: 1.25rem; }
-
-    .grades-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0.65rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .grade-btn {
-      background: var(--surface);
-      border: 1.5px solid var(--line);
-      color: var(--ink);
-      border-radius: var(--radius-sm);
-      padding: 0.72rem 0.85rem;
-      font-size: 0.9rem;
-      font-weight: 800;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .grade-btn.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #ffffff;
-    }
-
-    .grade-workspace {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-    }
-
-    .grade-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.6rem;
-      padding-bottom: 0.85rem;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 1rem;
-    }
-
-    .grade-header h3 { font-size: 1.18rem; color: var(--primary-dark); }
-
-    .subtabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .subtab-btn {
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
-      color: var(--ink);
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .subtab-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
-    }
-
-    .grid {
+    .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
       gap: 1rem;
     }
 
-    .card {
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
+    .info-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
       padding: 1.15rem;
     }
 
-    main > .panel > .grid .card,
-    .sim-box {
+    .container > .section-panel > .cards-grid .info-card,
+    .lab-card {
       background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.2rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .tag {
-      display: inline-block;
-      background: var(--primary-soft);
-      color: var(--primary-dark);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.18rem 0.58rem;
-      border-radius: 999px;
-      margin-bottom: 0.5rem;
+    .info-card h4, .info-card h3 {
+      font-size: 1.03rem;
+      font-weight: 800;
+      margin: 0.35rem 0 0.45rem;
     }
 
-    .tag.teal {
-      background: var(--accent-soft);
-      color: #115e59;
+    .info-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 0.45rem;
     }
 
-    .card h3, .card h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-    .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.5rem; }
-
-    .list-clean {
-      padding-right: 1.2rem;
-      margin-top: 0.45rem;
+    .chapter-list {
+      padding-right: 1.25rem;
+      margin-top: 0.5rem;
       font-size: 0.92rem;
     }
 
-    .list-clean li { margin-bottom: 0.35rem; }
+    .chapter-list li {
+      margin-bottom: 0.35rem;
+    }
 
-    .formula-box {
+    .math-box {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       border-right: 4px solid var(--primary);
-      border-radius: var(--radius-sm);
+      border-radius: var(--r-md);
       padding: 0.65rem;
       text-align: center;
       direction: ltr;
       overflow-x: auto;
+      margin-top: 0.6rem;
+    }
+
+    .outcome-box {
+      background: var(--teal-tint);
+      color: #115e59;
+      border: 1px solid #99f6e4;
+      border-radius: var(--r-md);
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
       margin-top: 0.65rem;
     }
 
-    .result-strip {
-      background: var(--accent-soft);
-      color: #115e59;
-      border: 1px solid #99f6e4;
-      padding: 0.85rem 1rem;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      margin-top: 0.7rem;
-      font-size: 0.92rem;
-    }
-
-    .drag-lab {
-      margin-top: 1.1rem;
+    .drag-card {
+      margin-top: 1.15rem;
       background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.15rem;
     }
 
-    .drag-stage {
+    .drag-area {
       position: relative;
       height: 290px;
       background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
       overflow: hidden;
       touch-action: none;
       user-select: none;
       margin: 0.75rem 0;
     }
 
-    .beaker {
+    .glass-beaker {
       position: absolute;
       bottom: 16px;
       left: 50%;
@@ -291,7 +387,7 @@
       overflow: hidden;
     }
 
-    .water-fill {
+    .liquid-level {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -302,13 +398,13 @@
       transition: height 0.12s ease-out;
     }
 
-    .draggable-block {
+    .cube-item {
       position: absolute;
       top: 20px;
       left: 20px;
       width: 68px;
       height: 68px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #d97706, #92400e);
       color: #ffffff;
       border: 2px solid #78350f;
@@ -316,49 +412,53 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 800;
       cursor: grab;
       z-index: 5;
       touch-action: none;
     }
 
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+    .slider-row {
       margin: 1rem 0;
+      max-width: 420px;
     }
 
-    .control-item label {
+    .slider-row label {
       display: block;
       font-size: 0.92rem;
       font-weight: 700;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
     }
 
-    .control-item input[type="range"] {
+    .slider-row input[type="range"] {
       width: 100%;
       accent-color: var(--primary);
     }
 
-    footer {
-      max-width: 1120px;
+    .site-footer {
+      max-width: 1140px;
       margin: 0 auto 2.5rem;
       padding: 0 1rem;
     }
 
-    .footer-card {
+    .footer-box {
       background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 1.3rem;
       text-align: center;
+      box-shadow: var(--shadow-sm);
     }
 
-    .footer-card h3 { font-size: 1.05rem; color: var(--primary-dark); margin-bottom: 0.75rem; }
+    .footer-box h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-deep);
+      margin-bottom: 0.75rem;
+    }
 
-    .contact-list {
+    .footer-links {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -366,287 +466,700 @@
       margin-bottom: 0.7rem;
     }
 
-    .contact-item {
-      background: var(--surface-alt);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 0.45rem 0.85rem;
+    .footer-pill {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 0.45rem 0.9rem;
       font-size: 0.92rem;
+      font-weight: 700;
       color: var(--ink);
       text-decoration: none;
-      font-weight: 700;
     }
 
-    .footer-note { color: var(--muted); font-size: 0.85rem; }
+    .footer-copy {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="#home" data-tab="home">مكتبتي التعليمية</a>
-      <nav id="tabs">
-        <button type="button" class="active" data-tab="home">الرئيسية</button>
-        <button type="button" data-tab="grades">الصفوف الدراسية</button>
-        <button type="button" class="active" data-tab="examples">المسائل الفيزيائية</button>
-        <button type="button" data-tab="free-lab">المختبر الحر</button>
-        <button type="button" data-tab="formulas">القوانين</button>
+  <header class="nav-wrap">
+    <div class="nav-inner">
+      <a class="brand-link" href="#home" onclick="switchSection('home'); return false;">
+        <span class="brand-badge">Φ</span>
+        <span>مكتبتي التعليمية</span>
+      </a>
+      <nav class="menu-bar" id="topMenu">
+        <button type="button" class="menu-btn is-active" data-section="home" onclick="switchSection('home')">الرئيسية</button>
+        <button type="button" class="menu-btn" data-section="grades" onclick="switchSection('grades')">الصفوف الدراسية</button>
+        <button type="button" class="menu-btn" data-section="examples" onclick="switchSection('examples')">المسائل الفيزيائية</button>
+        <button type="button" class="menu-btn" data-section="free-lab" onclick="switchSection('free-lab')">المختبر الحر</button>
+        <button type="button" class="menu-btn" data-section="formulas" onclick="switchSection('formulas')">القوانين</button>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-box">
+  <section class="hero-shell">
+    <div class="hero-card">
+      <span class="hero-pill">منصة الفيزياء التفاعلية</span>
       <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
       <p>الكتب الدراسية، عدد الفصول، الأنشطة، المسائل الفيزيائية، والتجارب العملية من الأول المتوسط إلى السادس الإعدادي.</p>
     </div>
   </section>
 
-  <main>
-    <section id="home" class="panel active">
-      <div class="section-head">
+  <main class="container">
+    <section id="home" class="section-panel is-visible">
+      <div class="heading-row">
         <h2>اختر الصف الدراسي</h2>
       </div>
-      <div class="grades-bar" id="homeGradesGrid">
-        <button type="button" class="grade-btn" data-open-grade="g1m">الصف الأول المتوسط (6 فصول)</button>
-        <button type="button" class="grade-btn" data-open-grade="g2m">الصف الثاني المتوسط (6 فصول)</button>
-        <button type="button" class="grade-btn" data-open-grade="g3m">الصف الثالث المتوسط (9 فصول)</button>
-        <button type="button" class="grade-btn" data-open-grade="g4s">الصف الرابع العلمي (9 فصول)</button>
-        <button type="button" class="grade-btn" data-open-grade="g5s">الصف الخامس العلمي (9 فصول)</button>
-        <button type="button" class="grade-btn" data-open-grade="g6s">الصف السادس العلمي (8 فصول)</button>
+      <div class="grades-grid" id="homeGradesList">
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g1m')">
+          <span class="g-title">الصف الأول المتوسط</span>
+          <span class="g-meta">6 فصول • المرحلة المتوسطة</span>
+        </button>
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g2m')">
+          <span class="g-title">الصف الثاني المتوسط</span>
+          <span class="g-meta">6 فصول • المرحلة المتوسطة</span>
+        </button>
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g3m')">
+          <span class="g-title">الصف الثالث المتوسط</span>
+          <span class="g-meta">9 فصول • المرحلة المتوسطة</span>
+        </button>
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g4s')">
+          <span class="g-title">الصف الرابع العلمي</span>
+          <span class="g-meta">9 فصول • المرحلة الإعدادية</span>
+        </button>
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g5s')">
+          <span class="g-title">الصف الخامس العلمي</span>
+          <span class="g-meta">9 فصول • المرحلة الإعدادية</span>
+        </button>
+        <button type="button" class="grade-tile" onclick="openGradeDirect('g6s')">
+          <span class="g-title">الصف السادس العلمي</span>
+          <span class="g-meta">8 فصول • المرحلة الإعدادية</span>
+        </button>
       </div>
     </section>
 
-    <section id="grades" class="panel">
-      <div class="section-head">
+    <section id="grades" class="section-panel">
+      <div class="heading-row">
         <h2>الصفوف الدراسية (الأول المتوسط — السادس الإعدادي)</h2>
       </div>
 
-      <div class="grades-bar" id="gradesTabsBar">
-        <button type="button" class="grade-btn active" data-grade="g1m">الصف الأول المتوسط</button>
-        <button type="button" class="grade-btn" data-grade="g2m">الصف الثاني المتوسط</button>
-        <button type="button" class="grade-btn" data-grade="g3m">الصف الثالث المتوسط</button>
-        <button type="button" class="grade-btn" data-grade="g4s">الصف الرابع العلمي</button>
-        <button type="button" class="grade-btn" data-grade="g5s">الصف الخامس العلمي</button>
-        <button type="button" class="grade-btn" data-grade="g6s">الصف السادس العلمي</button>
+      <div class="grades-grid" id="gradesSelectorList">
+        <button type="button" class="grade-tile is-selected" data-g="g1m" onclick="selectGradeDirect('g1m')">
+          <span class="g-title">الصف الأول المتوسط</span>
+          <span class="g-meta">6 فصول</span>
+        </button>
+        <button type="button" class="grade-tile" data-g="g2m" onclick="selectGradeDirect('g2m')">
+          <span class="g-title">الصف الثاني المتوسط</span>
+          <span class="g-meta">6 فصول</span>
+        </button>
+        <button type="button" class="grade-tile" data-g="g3m" onclick="selectGradeDirect('g3m')">
+          <span class="g-title">الصف الثالث المتوسط</span>
+          <span class="g-meta">9 فصول</span>
+        </button>
+        <button type="button" class="grade-tile" data-g="g4s" onclick="selectGradeDirect('g4s')">
+          <span class="g-title">الصف الرابع العلمي</span>
+          <span class="g-meta">9 فصول</span>
+        </button>
+        <button type="button" class="grade-tile" data-g="g5s" onclick="selectGradeDirect('g5s')">
+          <span class="g-title">الصف الخامس العلمي</span>
+          <span class="g-meta">9 فصول</span>
+        </button>
+        <button type="button" class="grade-tile" data-g="g6s" onclick="selectGradeDirect('g6s')">
+          <span class="g-title">الصف السادس العلمي</span>
+          <span class="g-meta">8 فصول</span>
+        </button>
       </div>
 
-      <div class="grade-workspace">
-        <div class="grade-header">
-          <h3 id="selectedGradeTitle">الصف الأول المتوسط</h3>
+      <div class="workspace-box">
+        <div class="workspace-top">
+          <h3 id="gradeHeading">الصف الأول المتوسط</h3>
           <div>
-            <span class="tag teal" id="selectedGradeStage">المرحلة المتوسطة</span>
-            <span class="tag" id="selectedGradeChaptersCount">عدد الفصول: 6</span>
+            <span class="chip teal" id="gradeStageChip">المرحلة المتوسطة</span>
+            <span class="chip" id="gradeChaptersChip">عدد الفصول: 6</span>
           </div>
         </div>
 
-        <div class="subtabs" id="gradeSubtabs">
-          <button type="button" class="subtab-btn active" data-sub="book">الكتاب والفصول</button>
-          <button type="button" class="subtab-btn" data-sub="activities">الأنشطة</button>
-          <button type="button" class="subtab-btn" data-sub="experiments">التجارب العملية</button>
+        <div class="sub-bar" id="subTabsBar">
+          <button type="button" class="sub-btn is-active" data-subtab="book" onclick="switchSubtab('book')">الكتاب والفصول</button>
+          <button type="button" class="sub-btn" data-subtab="activities" onclick="switchSubtab('activities')">الأنشطة</button>
+          <button type="button" class="sub-btn" data-subtab="experiments" onclick="switchSubtab('experiments')">التجارب العملية</button>
         </div>
 
-        <div id="gradeContentArea"></div>
+        <div id="gradeWorkspaceBody"></div>
       </div>
     </section>
 
-    <section id="examples" class="panel">
-      <div class="section-head">
+    <section id="examples" class="section-panel">
+      <div class="heading-row">
         <h2>المسائل الفيزيائية المحلولة</h2>
       </div>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">حركة خطية</span>
+      <div class="cards-grid">
+        <article class="info-card">
+          <span class="chip">حركة خطية</span>
           <h3>مسألة 1: حساب السرعة النهائية</h3>
           <p><strong>المسألة:</strong> جسم يبدأ حركته من السكون ($v_0 = 0$) بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$. احسب سرعته النهائية.</p>
           <p><strong>الحل:</strong> $v = 0 + 3 \times 4 = 12\,\text{m/s}$.</p>
-          <div class="formula-box">$$v = v_0 + a t$$</div>
+          <div class="math-box">$$v = v_0 + a t$$</div>
         </article>
-        <article class="card">
-          <span class="tag teal">كهرباء</span>
+        <article class="info-card">
+          <span class="chip teal">كهرباء</span>
           <h3>مسألة 2: حساب المقاومة الكهربائية</h3>
           <p><strong>المسألة:</strong> موصل يمر فيه تيار شدته $I = 2\,\text{A}$ عندما يكون فرق الجهد بين طرفيه $V = 12\,\text{V}$. احسب مقاومته.</p>
           <p><strong>الحل:</strong> $R = \frac{12}{2} = 6\,\Omega$.</p>
-          <div class="formula-box">$$R = \frac{V}{I}$$</div>
+          <div class="math-box">$$R = \frac{V}{I}$$</div>
         </article>
       </div>
     </section>
 
-    <section id="free-lab" class="panel">
-      <div class="section-head">
+    <section id="free-lab" class="section-panel">
+      <div class="heading-row">
         <h2>المختبر الحر — محاكاة البندول</h2>
       </div>
-      <div class="sim-box">
+      <div class="lab-card">
         <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
-        <div class="controls">
-          <div class="control-item">
-            <label for="lengthRange">طول الخيط $L$: <span id="lengthVal">1.0</span> m</label>
-            <input id="lengthRange" type="range" min="0.2" max="3.0" step="0.1" value="1.0" />
-          </div>
+        <div class="slider-row">
+          <label for="pendulumLen">طول الخيط $L$: <span id="pendulumLenVal">1.0</span> m</label>
+          <input id="pendulumLen" type="range" min="0.2" max="3.0" step="0.1" value="1.0" oninput="calcPendulum()" />
         </div>
-        <div class="result-strip" id="periodResult">الزمن الدوري التقريبي: 2.01 ثانية</div>
+        <div class="outcome-box" id="pendulumOutput">الزمن الدوري التقريبي: 2.01 ثانية</div>
       </div>
     </section>
 
-    <section id="formulas" class="panel">
-      <div class="section-head">
+    <section id="formulas" class="section-panel">
+      <div class="heading-row">
         <h2>القوانين الفيزيائية</h2>
       </div>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">طاقة</span>
+      <div class="cards-grid">
+        <article class="info-card">
+          <span class="chip">طاقة</span>
           <h3>الطاقة الحركية</h3>
-          <div class="formula-box">$$K = \frac{1}{2} m v^2$$</div>
+          <div class="math-box">$$K = \frac{1}{2} m v^2$$</div>
         </article>
-        <article class="card">
-          <span class="tag teal">موجات</span>
+        <article class="info-card">
+          <span class="chip teal">موجات</span>
           <h3>سرعة انتشار الموجة</h3>
-          <div class="formula-box">$$v = \lambda f$$</div>
+          <div class="math-box">$$v = \lambda f$$</div>
         </article>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-card">
+  <footer class="site-footer">
+    <div class="footer-box">
       <h3>إشراف وتواصل — مكتبتي التعليمية</h3>
-      <div class="contact-list">
-        <span class="contact-item">الأستاذ امير الخاقاني</span>
-        <a class="contact-item" href="tel:07818761812" dir="ltr">07818761812</a>
-        <a class="contact-item" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">@Taech_ameer</a>
+      <div class="footer-links">
+        <span class="footer-pill">الأستاذ امير الخاقاني</span>
+        <a class="footer-pill" href="tel:07818761812" dir="ltr">07818761812</a>
+        <a class="footer-pill" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">@Taech_ameer</a>
       </div>
-      <p class="footer-note">مكتبتي التعليمية — مختبر الفيزياء</p>
+      <p class="footer-copy">مكتبتي التعليمية — مختبر الفيزياء</p>
     </div>
   </footer>
 
   <script>
-    (function () {
-      const gradesData = {
-        g1m: {
-          name: "الصف الأول المتوسط",
-          stage: "المرحلة المتوسطة",
-          chaptersCount: 6,
-          bookTitle: "كتاب الفيزياء — الأول المتوسط",
-          chapters: [
-            "الفصل الأول: خواص المادة",
-            "الفصل الثاني: القوة",
-            "الفصل الثالث: الضغط",
-            "الفصل الرابع: الحرارة",
-            "الفصل الخامس: أثر الحرارة في المواد",
-            "الفصل السادس: موضوعات المنهج المقررة"
-          ],
-          activities: [
-            {
-              tag: "خواص المادة",
-              title: "قياس حجم جسم صلب غير منتظم بالإزاحة",
-              steps: "نضع ماءً في مخبار مدرج، نسجل قراءته، ثم نغمر الجسم الصلب ونطرح القراءتين.",
-              conclusion: "حجم الجسم يساوي حجم الماء المزاح."
-            },
-            {
-              tag: "الحرارة",
-              title: "تأثير التسخين في تمدد الأجسام",
-              steps: "نختبر مرور كرة معدنية في حلقة قبل التسخين وبعده.",
-              conclusion: "تتمدد المواد بالحرارة وتزداد أبعادها."
-            }
-          ],
-          experiments: [
-            {
-              tag: "الفصل الأول — تجربة تفاعلية باليد",
-              title: "الإزاحة والكثافة في المخبار المدرج",
-              desc: "اسحب المكعب باللمس أو الماوس إلى داخل الماء لمشاهدة ارتفاع مستوى الماء وحساب الحجم المزاح.",
-              formula: "$$\\rho = \\frac{m}{V}$$",
-              interactiveDrag: true
-            },
-            {
-              tag: "الفصل الثالث — الضغط",
-              title: "ضغط السوائل مع العمق",
-              desc: "يزداد ضغط السائل بزيادة عمقه تحت السطح الحر للسائل.",
-              formula: "$$P = \\rho g h$$"
-            },
-            {
-              tag: "الفصل الرابع — الحرارة",
-              title: "العلاقة بين الحرارة والتغير في درجة الحرارة",
-              desc: "تعتمد كمية الحرارة المكتسبة أو المفقودة على كتلة المادة وحرارتها النوعية والتغير في درجة حرارتها.",
-              formula: "$$Q = c \\cdot m \\cdot \\Delta T$$"
-            }
-          ]
-        },
-        g2m: {
-          name: "الصف الثاني المتوسط",
-          stage: "المرحلة المتوسطة",
-          chaptersCount: 6,
-          bookTitle: "كتاب الفيزياء — الثاني المتوسط",
-          chapters: [
-            "الفصل الأول: الحركة",
-            "الفصل الثاني: قوانين الحركة",
-            "الفصل الثالث: الشغل والقدرة والطاقة",
-            "الفصل الرابع: الآلات البسيطة",
-            "الفصل الخامس: الحركة الموجية والصوت",
-            "الفصل السادس: الضوء"
-          ],
-          activities: [
-            {
-              tag: "الحركة",
-              title: "تمثيل الحركة بيانياً",
-              steps: "نسجل المسافة والزمن ونرسم العلاقة البيانية بينهما.",
-              conclusion: "الميل المنتظم يمثل سرعة ثابتة."
-            }
-          ],
-          experiments: [
-            {
-              tag: "الفصل الأول — السرعة",
-              title: "حساب السرعة المتوسطة",
-              desc: "النسبة بين المسافة الكلية والزمن الكلي المستغرق.",
-              formula: "$$v = \\frac{d}{t}$$"
-            },
-            {
-              tag: "الفصل الثاني — القوة",
-              title: "قانون نيوتن الثاني",
-              desc: "تتناسب محصلة القوى المؤثرة في جسم طردياً مع تعجيله بثبوت الكتلة.",
-              formula: "$$F = m \\cdot a$$"
-            },
-            {
-              tag: "الفصل الثالث — الشغل",
-              title: "حساب الشغل الميكانيكي",
-              desc: "الشغل يساوي حاصل ضرب القوة في الإزاحة باتجاهها.",
-              formula: "$$W = F \\cdot d$$"
-            },
-            {
-              tag: "الفصل الخامس — الموجات",
-              title: "سرعة انتشار الموجة",
-              desc: "تساوي حاصل ضرب الطول الموجي في تردد الموجة.",
-              formula: "$$v = \\lambda \\cdot f$$"
-            }
-          ]
-        },
-        g3m: {
-          name: "الصف الثالث المتوسط",
-          stage: "المرحلة المتوسطة",
-          chaptersCount: 9,
-          bookTitle: "كتاب الفيزياء — الثالث المتوسط",
-          chapters: [
-            "الفصل الأول: الكهربائية الساكنة",
-            "الفصل الثاني: المغناطيسية",
-            "الفصل الثالث: التيار الكهربائي",
-            "الفصل الرابع: البطارية والقوة الدافعة الكهربائية",
-            "الفصل الخامس: الطاقة والقدرة الكهربائية",
-            "الفصل السادس: الكهربائية والمغناطيسية",
-            "الفصل السابع: المحولة الكهربائية",
-            "الفصل الثامن: تكنولوجيا مصادر الطاقة",
-            "الفصل التاسع: فيزياء الجو وتقنية الاتصالات الحديثة"
-          ],
-          activities: [
-            {
-              tag: "الكهربائية الساكنة",
-              title: "الكشاف الكهربائي",
-              steps: "تقريب جسم مشحون من قرص الكشاف وملاحظة انفراج الورقتين.",
-              conclusion: "انفراج الورقتين يدل على وجود شحنة كهربائية."
-            }
-          ],
-          experiments: [
-            {
-              tag: "الفصل الثالث — قانون أوم",
-              title: "العلاقة بين فرق الجهد والتيار",
-              desc: "المقاومة تساوي ناتج قسمة فرق الجهد على التيار الكهربائي.",
-              formula: "$$R = \\frac{V}{I}$$"
-            },
-           
+    const curriculum = {
+      g1m: {
+        name: "الصف الأول المتوسط",
+        stage: "المرحلة المتوسطة",
+        chaptersCount: 6,
+        bookTitle: "كتاب الفيزياء — الأول المتوسط",
+        chapters: [
+          "الفصل الأول: خواص المادة",
+          "الفصل الثاني: القوة",
+          "الفصل الثالث: الضغط",
+          "الفصل الرابع: الحرارة",
+          "الفصل الخامس: أثر الحرارة في المواد",
+          "الفصل السادس: موضوعات المنهج المقررة"
+        ],
+        activities: [
+          {
+            tag: "خواص المادة",
+            title: "قياس حجم جسم صلب غير منتظم بالإزاحة",
+            steps: "نضع ماءً في مخبار مدرج، نسجل قراءته، ثم نغمر الجسم الصلب ونطرح القراءتين.",
+            conclusion: "حجم الجسم يساوي حجم الماء المزاح."
+          },
+          {
+            tag: "الحرارة",
+            title: "تأثير التسخين في تمدد الأجسام",
+            steps: "نختبر مرور كرة معدنية في حلقة قبل التسخين وبعده.",
+            conclusion: "تتمدد المواد بالحرارة وتزداد أبعادها."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الأول — تجربة تفاعلية باليد",
+            title: "الإزاحة والكثافة في المخبار المدرج",
+            desc: "اسحب المكعب باللمس أو الماوس إلى داخل الماء لمشاهدة ارتفاع مستوى الماء وحساب الحجم المزاح.",
+            formula: "$$\\rho = \\frac{m}{V}$$",
+            interactiveDrag: true
+          },
+          {
+            tag: "الفصل الثالث — الضغط",
+            title: "ضغط السوائل مع العمق",
+            desc: "يزداد ضغط السائل بزيادة عمقه تحت السطح الحر للسائل.",
+            formula: "$$P = \\rho g h$$"
+          },
+          {
+            tag: "الفصل الرابع — الحرارة",
+            title: "العلاقة بين الحرارة والتغير في درجة الحرارة",
+            desc: "تعتمد كمية الحرارة المكتسبة أو المفقودة على كتلة المادة وحرارتها النوعية والتغير في درجة حرارتها.",
+            formula: "$$Q = c \\cdot m \\cdot \\Delta T$$"
+          }
+        ]
+      },
+      g2m: {
+        name: "الصف الثاني المتوسط",
+        stage: "المرحلة المتوسطة",
+        chaptersCount: 6,
+        bookTitle: "كتاب الفيزياء — الثاني المتوسط",
+        chapters: [
+          "الفصل الأول: الحركة",
+          "الفصل الثاني: قوانين الحركة",
+          "الفصل الثالث: الشغل والقدرة والطاقة",
+          "الفصل الرابع: الآلات البسيطة",
+          "الفصل الخامس: الحركة الموجية والصوت",
+          "الفصل السادس: الضوء"
+        ],
+        activities: [
+          {
+            tag: "الحركة",
+            title: "تمثيل الحركة بيانياً",
+            steps: "نسجل المسافة والزمن ونرسم العلاقة البيانية بينهما.",
+            conclusion: "الميل المنتظم يمثل سرعة ثابتة."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الأول — السرعة",
+            title: "حساب السرعة المتوسطة",
+            desc: "النسبة بين المسافة الكلية والزمن الكلي المستغرق.",
+            formula: "$$v = \\frac{d}{t}$$"
+          },
+          {
+            tag: "الفصل الثاني — القوة",
+            title: "قانون نيوتن الثاني",
+            desc: "تتناسب محصلة القوى المؤثرة في جسم طردياً مع تعجيله بثبوت الكتلة.",
+            formula: "$$F = m \\cdot a$$"
+          },
+          {
+            tag: "الفصل الثالث — الشغل",
+            title: "حساب الشغل الميكانيكي",
+            desc: "الشغل يساوي حاصل ضرب القوة في الإزاحة باتجاهها.",
+            formula: "$$W = F \\cdot d$$"
+          },
+          {
+            tag: "الفصل الخامس — الموجات",
+            title: "سرعة انتشار الموجة",
+            desc: "تساوي حاصل ضرب الطول الموجي في تردد الموجة.",
+            formula: "$$v = \\lambda \\cdot f$$"
+          }
+        ]
+      },
+      g3m: {
+        name: "الصف الثالث المتوسط",
+        stage: "المرحلة المتوسطة",
+        chaptersCount: 9,
+        bookTitle: "كتاب الفيزياء — الثالث المتوسط",
+        chapters: [
+          "الفصل الأول: الكهربائية الساكنة",
+          "الفصل الثاني: المغناطيسية",
+          "الفصل الثالث: التيار الكهربائي",
+          "الفصل الرابع: البطارية والقوة الدافعة الكهربائية",
+          "الفصل الخامس: الطاقة والقدرة الكهربائية",
+          "الفصل السادس: الكهربائية والمغناطيسية",
+          "الفصل السابع: المحولة الكهربائية",
+          "الفصل الثامن: تكنولوجيا مصادر الطاقة",
+          "الفصل التاسع: فيزياء الجو وتقنية الاتصالات الحديثة"
+        ],
+        activities: [
+          {
+            tag: "الكهربائية الساكنة",
+            title: "الكشاف الكهربائي",
+            steps: "تقريب جسم مشحون من قرص الكشاف وملاحظة انفراج الورقتين.",
+            conclusion: "انفراج الورقتين يدل على وجود شحنة كهربائية."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الثالث — قانون أوم",
+            title: "العلاقة بين فرق الجهد والتيار",
+            desc: "المقاومة تساوي ناتج قسمة فرق الجهد على التيار الكهربائي.",
+            formula: "$$R = \\frac{V}{I}$$"
+          },
+          {
+            tag: "الفصل الرابع — القوة الدافعة",
+            title: "القوة الدافعة الكهربائية (emf)",
+            desc: "تمثل مقدار الطاقة المكتسبة لكل وحدة شحنة.",
+            formula: "$$\\varepsilon = \\frac{W}{q}$$"
+          },
+          {
+            tag: "الفصل الخامس — القدرة",
+            title: "حساب القدرة الكهربائية",
+            desc: "القدرة الكهربائية تساوي حاصل ضرب التيار في فرق الجهد.",
+            formula: "$$P = I \\cdot V$$"
+          },
+          {
+            tag: "الفصل السابع — المحولة",
+            title: "نسبة التحويل في المحولة الكهربائية",
+            desc: "العلاقة بين عدد لفات الملفين وفولتية كل منهما.",
+            formula: "$$\\frac{N_2}{N_1} = \\frac{V_2}{V_1}$$"
+          }
+        ]
+      },
+      g4s: {
+        name: "الصف الرابع العلمي",
+        stage: "المرحلة الإعدادية",
+        chaptersCount: 9,
+        bookTitle: "كتاب الفيزياء — الرابع العلمي",
+        chapters: [
+          "الفصل الأول: مفاهيم أساسية في الفيزياء",
+          "الفصل الثاني: الخصائص الميكانيكية للمادة",
+          "الفصل الثالث: الموائع الساكنة",
+          "الفصل الرابع: انكسار الضوء",
+          "الفصل الخامس: المرايا",
+          "الفصل السادس: العدسات الرقيقة",
+          "الفصل السابع: الكهرباء الساكنة",
+          "الفصل الثامن: فصول المنهج المقررة",
+          "الفصل التاسع: فصول المنهج المقررة"
+        ],
+        activities: [
+          {
+            tag: "المتجهات",
+            title: "تحليل وجمع المتجهات",
+            steps: "تحليل المتجهات إلى مركبات أفقية وشاقولية ثم جمعها.",
+            conclusion: "المحصلة تعتمد على المقدار والزاوية."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الثاني — المرونة",
+            title: "قانون هوك والاجهاد والمطاوعة",
+            desc: "ضمن حد المرونة يتناسب الإجهاد طردياً مع المطاوعة.",
+            formula: "$$E = \\frac{\\text{Stress}}{\\text{Strain}}$$"
+          },
+          {
+            tag: "الفصل الثالث — الموائع",
+            title: "الضغط في الموائع الساكنة",
+            desc: "يزداد الضغط بزيادة عمق النقطة داخل المائع الساكن.",
+            formula: "$$P = P_0 + \\rho g h$$"
+          },
+          {
+            tag: "الفصل الرابع — الانكسار",
+            title: "قانون سنل في انكسار الضوء",
+            desc: "يربط معامل انكسار الوسطين بزاويتي السقوط والانكسار.",
+            formula: "$$n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$$"
+          },
+          {
+            tag: "الفصل السابع — كولوم",
+            title: "قانون كولوم للقوة الكهربائية",
+            desc: "القوة المتبادلة بين شحنتين نقطيتين تتناسب طردياً مع حاصل ضربهما وعكسياً مع مربع المسافة بينهما.",
+            formula: "$$F = k_e \\frac{|q_1 q_2|}{r^2}$$"
+          }
+        ]
+      },
+      g5s: {
+        name: "الصف الخامس العلمي",
+        stage: "المرحلة الإعدادية",
+        chaptersCount: 9,
+        bookTitle: "كتاب الفيزياء — الخامس العلمي",
+        chapters: [
+          "الفصل الأول: المتجهات",
+          "الفصل الثاني: الحركة",
+          "الفصل الثالث: قوانين الحركة",
+          "الفصل الرابع: الاتزان والعزوم",
+          "الفصل الخامس: الشغل والقدرة والطاقة والزخم",
+          "الفصل السادس: الحركة الدائرية والدورانية",
+          "الفصل السابع: الثرموديناميك",
+          "الفصل الثامن: الموجات والصوت",
+          "الفصل التاسع: البصريات"
+        ],
+        activities: [
+          {
+            tag: "الاتزان",
+            title: "مركز الثقل واتزان الأجسام",
+            steps: "موازنة الأوزان على مسافات مختلفة من نقطة الارتكاز.",
+            conclusion: "يتزن الجسم عندما تكون محصلة العزوم صفراً."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الثالث — قوانين الحركة",
+            title: "القوة والتعجيل والكتلة",
+            desc: "محصلة القوى المؤثرة في جسم تساوي كتلته في تعجيله.",
+            formula: "$$\\sum F = m a$$"
+          },
+          {
+            tag: "الفصل الرابع — العزوم",
+            title: "عزم القوة والاتزان الدوراني",
+            desc: "العزم يساوي حاصل ضرب القوة في الذراع العمودي.",
+            formula: "$$\\tau = r F \\sin\\theta$$"
+          },
+          {
+            tag: "الفصل السادس — الحركة الدائرية",
+            title: "التعجيل المركزي",
+            desc: "يحسب من مربع السرعة مقسوماً على نصف قطر المسار الدائري.",
+            formula: "$$a_c = \\frac{v^2}{r}$$"
+          },
+          {
+            tag: "الفصل السابع — الثرموديناميك",
+            title: "القانون الأول للثرموديناميك",
+            desc: "كمية الحرارة المضافة تساوي التغير في الطاقة الداخلية مضافاً إليه الشغل المنجز.",
+            formula: "$$Q = \\Delta U + W$$"
+          },
+          {
+            tag: "الفصل الثامن — الموجات",
+            title: "سرعة انتشار الموجة",
+            desc: "تربط بين سرعة الموجة وطولها الموجي وترددها.",
+            formula: "$$v = \\lambda f$$"
+          }
+        ]
+      },
+      g6s: {
+        name: "الصف السادس العلمي",
+        stage: "المرحلة الإعدادية",
+        chaptersCount: 8,
+        bookTitle: "كتاب الفيزياء — السادس العلمي",
+        chapters: [
+          "الفصل الأول: المتسعات",
+          "الفصل الثاني: الحث الكهرومغناطيسي",
+          "الفصل الثالث: دوائر التيار المتناوب",
+          "الفصل الرابع: الموجات الكهرومغناطيسية",
+          "الفصل الخامس: البصريات الفيزيائية",
+          "الفصل السادس: الفيزياء الحديثة",
+          "الفصل السابع: إلكترونيات الحالة الصلبة",
+          "الفصل الثامن: الأطياف الذرية والليزر (والنسبية/النووية حسب الطبعة)"
+        ],
+        activities: [
+          {
+            tag: "المتسعات",
+            title: "شحن وتفريغ متسعة",
+            steps: "مراقبة التيار والجهد أثناء شحن المتسعة وتفريغها.",
+            conclusion: "يزداد فرق الجهد تدريجياً أثناء الشحن."
+          }
+        ],
+        experiments: [
+          {
+            tag: "الفصل الأول — المتسعات",
+            title: "سعة المتسعة والطاقة المختزنة",
+            desc: "العلاقة بين الشحنة وفرق الجهد وسعة المتسعة.",
+            formula: "$$C = \\frac{q}{\\Delta V}$$"
+          },
+          {
+            tag: "الفصل الثاني — الحث",
+            title: "الحث الذاتي وقانون فاراداي",
+            desc: "تولد قوة دافعة كهربائية محتثة بتغير الفيض أو التيار مع الزمن.",
+            formula: "$$\\varepsilon_{ind} = -L \\frac{\\Delta I}{\\Delta t}$$"
+          },
+          {
+            tag: "الفصل الثالث — التيار المتناوب",
+            title: "الرنين في دائرة تيار متناوب",
+            desc: "تتساوى الرادة السعوية والرادة الحثية عند التردد الرنيني.",
+            formula: "$$X_L = X_C$$"
+          },
+          {
+            tag: "الفصل السادس — الحديثة",
+            title: "معادلة أينشتاين الكهروضوئية",
+            desc: "الطاقة الحركية العظمى للإلكترونات الضوئية المنبعثة.",
+            formula: "$$K_{max} = h f - w$$"
+          }
+        ]
+      }
+    };
+
+    let activeGrade = "g1m";
+    let activeSubtab = "book";
+
+    function refreshMath() {
+      if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+        window.MathJax.typesetPromise().catch(function () {});
+      }
+    }
+
+    function switchSection(sectionId) {
+      document.querySelectorAll(".section-panel").forEach(function (panel) {
+        panel.classList.toggle("is-visible", panel.id === sectionId);
+      });
+      document.querySelectorAll("#topMenu .menu-btn").forEach(function (btn) {
+        btn.classList.toggle("is-active", btn.getAttribute("data-section") === sectionId);
+      });
+      refreshMath();
+    }
+
+    function setupDragLab() {
+      const area = document.getElementById("dragArea");
+      const cube = document.getElementById("cubeItem");
+      const liquid = document.getElementById("liquidLevel");
+      const status = document.getElementById("dragStatus");
+      if (!area || !cube || !liquid || !status) return;
+
+      const volumeCm3 = 60;
+      const baseHeight = 90;
+      let isDragging = false;
+      let dx = 0;
+      let dy = 0;
+
+      function recalc() {
+        const cRect = cube.getBoundingClientRect();
+        const lRect = liquid.getBoundingClientRect();
+        const overlapX = cRect.right > lRect.left + 8 && cRect.left < lRect.right - 8;
+
+        let ratio = 0;
+        if (overlapX && cRect.bottom > lRect.top) {
+          const px = Math.min(cRect.bottom, lRect.bottom) - Math.max(cRect.top, lRect.top);
+          ratio = Math.max(0, Math.min(1, px / cRect.height));
+        }
+
+        liquid.style.height = (baseHeight + ratio * 32) + "px";
+        const displaced = (ratio * volumeCm3).toFixed(1);
+        status.textContent =
+          ratio === 0
+            ? "اسحب المكعب بيدك نحو الماء لمشاهدة الإزاحة."
+            : "الحجم المزاح تقريباً: " + displaced + " cm³";
+      }
+
+      cube.addEventListener("pointerdown", function (e) {
+        isDragging = true;
+        cube.setPointerCapture(e.pointerId);
+        const r = cube.getBoundingClientRect();
+        dx = e.clientX - r.left;
+        dy = e.clientY - r.top;
+      });
+
+      cube.addEventListener("pointermove", function (e) {
+        if (!isDragging) return;
+        const aRect = area.getBoundingClientRect();
+        let left = e.clientX - aRect.left - dx;
+        let top = e.clientY - aRect.top - dy;
+        left = Math.max(6, Math.min(aRect.width - cube.offsetWidth - 6, left));
+        top = Math.max(6, Math.min(aRect.height - cube.offsetHeight - 14, top));
+        cube.style.left = left + "px";
+        cube.style.top = top + "px";
+        recalc();
+      });
+
+      function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        if (e && cube.hasPointerCapture(e.pointerId)) {
+          cube.releasePointerCapture(e.pointerId);
+        }
+      }
+
+      cube.addEventListener("pointerup", endDrag);
+      cube.addEventListener("pointercancel", endDrag);
+      recalc();
+    }
+
+    function renderWorkspace() {
+      const data = curriculum[activeGrade];
+      const body = document.getElementById("gradeWorkspaceBody");
+      if (!data || !body) return;
+
+      if (activeSubtab === "book") {
+        body.innerHTML =
+          '<div class="info-card">' +
+            '<span class="chip">' + data.name + "</span>" +
+            "<h4>" + data.bookTitle + " — عدد الفصول: " + data.chaptersCount + "</h4>" +
+            '<ol class="chapter-list">' +
+              data.chapters.map(function (c) { return "<li>" + c + "</li>"; }).join("") +
+            "</ol>" +
+          "</div>";
+      } else if (activeSubtab === "activities") {
+        body.innerHTML =
+          '<div class="cards-grid">' +
+            data.activities.map(function (a) {
+              return (
+                '<article class="info-card">' +
+                  '<span class="chip teal">' + a.tag + "</span>" +
+                  "<h4>" + a.title + "</h4>" +
+                  "<p><strong>الخطوات:</strong> " + a.steps + "</p>" +
+                  '<div class="outcome-box"><strong>الاستنتاج:</strong> ' + a.conclusion + "</div>" +
+                "</article>"
+              );
+            }).join("") +
+          "</div>";
+      } else if (activeSubtab === "experiments") {
+        const hasDrag = data.experiments.some(function (x) { return x.interactiveDrag; });
+        body.innerHTML =
+          '<div class="cards-grid">' +
+            data.experiments.map(function (x) {
+              return (
+                '<article class="info-card">' +
+                  '<span class="chip">' + x.tag + "</span>" +
+                  "<h4>" + x.title + "</h4>" +
+                  "<p>" + x.desc + "</p>" +
+                  (x.formula ? '<div class="math-box">' + x.formula + "</div>" : "") +
+                "</article>"
+              );
+            }).join("") +
+          "</div>" +
+          (hasDrag
+            ? '<div class="drag-card">' +
+                "<h4>تجربة تفاعلية: اسحب المكعب إلى داخل الماء</h4>" +
+                '<div class="drag-area" id="dragArea">' +
+                  '<div class="cube-item" id="cubeItem">' +
+                    "<span>مكعب</span>" +
+                    "<span>60cm³</span>" +
+                  "</div>" +
+                  '<div class="glass-beaker">' +
+                    '<div class="liquid-level" id="liquidLevel"></div>' +
+                  "</div>" +
+                "</div>" +
+                '<div class="outcome-box" id="dragStatus">اسحب المكعب بيدك نحو الماء لمشاهدة الإزاحة.</div>' +
+              "</div>"
+            : "");
+        if (hasDrag) setupDragLab();
+      }
+
+      refreshMath();
+    }
+
+    function selectGradeDirect(gradeKey) {
+      if (!curriculum[gradeKey]) return;
+      activeGrade = gradeKey;
+      document.querySelectorAll("#gradesSelectorList .grade-tile").forEach(function (tile) {
+        tile.classList.toggle("is-selected", tile.getAttribute("data-g") === gradeKey);
+      });
+      const item = curriculum[gradeKey];
+      document.getElementById("gradeHeading").textContent = item.name;
+      document.getElementById("gradeStageChip").textContent = item.stage;
+      document.getElementById("gradeChaptersChip").textContent = "عدد الفصول: " + item.chaptersCount;
+      renderWorkspace();
+    }
+
+    function openGradeDirect(gradeKey) {
+      switchSection("grades");
+      selectGradeDirect(gradeKey);
+      const box = document.querySelector(".workspace-box");
+      if (box) {
+        box.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function switchSubtab(subKey) {
+      activeSubtab = subKey;
+      document.querySelectorAll("#subTabsBar .sub-btn").forEach(function (btn) {
+        btn.classList.toggle("is-active", btn.getAttribute("data-subtab") === subKey);
+      });
+      renderWorkspace();
+    }
+
+    function calcPendulum() {
+      const slider = document.getElementById("pendulumLen");
+      const val = document.getElementById("pendulumLenVal");
+      const out = document.getElementById("pendulumOutput");
+      if (!slider || !val || !out) return;
+      const L = parseFloat(slider.value);
+      const g = 9.81;
+      const T = 2 * Math.PI * Math.sqrt(L / g);
+      val.textContent = L.toFixed(1);
+      out.textContent = "الزمن الدوري التقريبي: " + T.toFixed(2) + " ثانية";
+    }
+
+    renderWorkspace();
+  </script>
+</body>
+</html>
