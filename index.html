@@ -119,8 +119,8 @@
 
     .grades-bar {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-      gap: 0.6rem;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.65rem;
       margin-bottom: 1.2rem;
     }
 
@@ -129,10 +129,11 @@
       border: 1.5px solid var(--line);
       color: var(--ink);
       border-radius: var(--radius-sm);
-      padding: 0.68rem 0.8rem;
+      padding: 0.72rem 0.85rem;
       font-size: 0.9rem;
       font-weight: 800;
       cursor: pointer;
+      text-align: center;
     }
 
     .grade-btn.active {
@@ -201,6 +202,9 @@
     main > .panel > .grid .card,
     .sim-box {
       background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
     }
 
     .tag {
@@ -381,11 +385,11 @@
     <div class="topbar-inner">
       <a class="brand" href="#home" onclick="showTab('home')">مكتبتي التعليمية</a>
       <nav id="tabs">
-        <button class="active" data-tab="home" onclick="showTab('home')">الرئيسية</button>
-        <button data-tab="grades" onclick="showTab('grades')">الصفوف الدراسية</button>
-        <button data-tab="examples" onclick="showTab('examples')">المسائل الفيزيائية</button>
-        <button data-tab="free-lab" onclick="showTab('free-lab')">المختبر الحر</button>
-        <button data-tab="formulas" onclick="showTab('formulas')">القوانين</button>
+        <button type="button" class="active" data-tab="home" onclick="showTab('home')">الرئيسية</button>
+        <button type="button" data-tab="grades" onclick="showTab('grades')">الصفوف الدراسية</button>
+        <button type="button" data-tab="examples" onclick="showTab('examples')">المسائل الفيزيائية</button>
+        <button type="button" data-tab="free-lab" onclick="showTab('free-lab')">المختبر الحر</button>
+        <button type="button" data-tab="formulas" onclick="showTab('formulas')">القوانين</button>
       </nav>
     </div>
   </header>
@@ -402,7 +406,14 @@
       <div class="section-head">
         <h2>اختر الصف الدراسي</h2>
       </div>
-      <div class="grades-bar" id="homeGradesGrid"></div>
+      <div class="grades-bar" id="homeGradesGrid">
+        <button type="button" class="grade-btn" onclick="openGrade('g1m')">الصف الأول المتوسط (6 فصول)</button>
+        <button type="button" class="grade-btn" onclick="openGrade('g2m')">الصف الثاني المتوسط (6 فصول)</button>
+        <button type="button" class="grade-btn" onclick="openGrade('g3m')">الصف الثالث المتوسط (9 فصول)</button>
+        <button type="button" class="grade-btn" onclick="openGrade('g4s')">الصف الرابع العلمي (9 فصول)</button>
+        <button type="button" class="grade-btn" onclick="openGrade('g5s')">الصف الخامس العلمي (9 فصول)</button>
+        <button type="button" class="grade-btn" onclick="openGrade('g6s')">الصف السادس العلمي (8 فصول)</button>
+      </div>
     </section>
 
     <section id="grades" class="panel">
@@ -410,7 +421,14 @@
         <h2>الصفوف الدراسية (الأول المتوسط — السادس الإعدادي)</h2>
       </div>
 
-      <div class="grades-bar" id="gradesTabsBar"></div>
+      <div class="grades-bar" id="gradesTabsBar">
+        <button type="button" class="grade-btn active" data-grade="g1m" onclick="selectGrade('g1m')">الصف الأول المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g2m" onclick="selectGrade('g2m')">الصف الثاني المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g3m" onclick="selectGrade('g3m')">الصف الثالث المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g4s" onclick="selectGrade('g4s')">الصف الرابع العلمي</button>
+        <button type="button" class="grade-btn" data-grade="g5s" onclick="selectGrade('g5s')">الصف الخامس العلمي</button>
+        <button type="button" class="grade-btn" data-grade="g6s" onclick="selectGrade('g6s')">الصف السادس العلمي</button>
+      </div>
 
       <div class="grade-workspace">
         <div class="grade-header">
@@ -422,9 +440,9 @@
         </div>
 
         <div class="subtabs" id="gradeSubtabs">
-          <button class="subtab-btn active" data-sub="book" onclick="showSubtab('book')">الكتاب والفصول</button>
-          <button class="subtab-btn" data-sub="activities" onclick="showSubtab('activities')">الأنشطة</button>
-          <button class="subtab-btn" data-sub="experiments" onclick="showSubtab('experiments')">التجارب العملية</button>
+          <button type="button" class="subtab-btn active" data-sub="book" onclick="showSubtab('book')">الكتاب والفصول</button>
+          <button type="button" class="subtab-btn" data-sub="activities" onclick="showSubtab('activities')">الأنشطة</button>
+          <button type="button" class="subtab-btn" data-sub="experiments" onclick="showSubtab('experiments')">التجارب العملية</button>
         </div>
 
         <div id="gradeContentArea"></div>
@@ -625,49 +643,4 @@
         ],
         experiments: [
           {
-            tag: "الفصل الثالث — قانون أوم",
-            title: "العلاقة بين فرق الجهد والتيار",
-            desc: "المقاومة تساوي ناتج قسمة فرق الجهد على التيار الكهربائي.",
-            formula: "$$R = \\frac{V}{I}$$"
-          },
-          {
-            tag: "الفصل الرابع — القوة الدافعة",
-            title: "القوة الدافعة الكهربائية (emf)",
-            desc: "تمثل مقدار الطاقة المكتسبة لكل وحدة شحنة.",
-            formula: "$$\\varepsilon = \\frac{W}{q}$$"
-          },
-          {
-            tag: "الفصل الخامس — القدرة",
-            title: "حساب القدرة الكهربائية",
-            desc: "القدرة الكهربائية تساوي حاصل ضرب التيار في فرق الجهد.",
-            formula: "$$P = I \\cdot V$$"
-          },
-          {
-            tag: "الفصل السابع — المحولة",
-            title: "نسبة التحويل في المحولة الكهربائية",
-            desc: "العلاقة بين عدد لفات الملفين وفولتية كل منهما.",
-            formula: "$$\\frac{N_2}{N_1} = \\frac{V_2}{V_1}$$"
-          }
-        ]
-      },
-      g4s: {
-        name: "الصف الرابع العلمي",
-        stage: "المرحلة الإعدادية",
-        chaptersCount: 9,
-        bookTitle: "كتاب الفيزياء — الرابع العلمي",
-        chapters: [
-          "الفصل الأول: مفاهيم أساسية في الفيزياء",
-          "الفصل الثاني: الخصائص الميكانيكية للمادة",
-          "الفصل الثالث: الموائع الساكنة",
-          "الفصل الرابع: انكسار الضوء",
-          "الفصل الخامس: المرايا",
-          "الفصل السادس: العدسات الرقيقة",
-          "الفصل السابع: الكهرباء الساكنة",
-          "الفصل الثامن: فصول المنهج المقررة",
-          "الفصل التاسع: فصول المنهج المقررة"
-        ],
-        activities: [
-          {
-            tag: "المتجهات",
-            title: "تحليل وجمع المتجهات",
-            steps: "تحليل 
+            tag: "الفصل الثالث — قانون أ
