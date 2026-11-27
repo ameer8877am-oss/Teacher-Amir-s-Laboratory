@@ -6,1160 +6,773 @@
   <title>مكتبتي التعليمية | مختبر الفيزياء التفاعلي</title>
   <script>
     window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      startup: { typeset: false }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
   <style>
     :root {
-      --bg: #f1f5f9;
-      --surface: #ffffff;
-      --surface-soft: #f8fafc;
-      --ink: #0f172a;
-      --muted: #475569;
-      --primary: #2563eb;
-      --primary-deep: #1e3a8a;
-      --primary-tint: #eff6ff;
-      --teal: #0d9488;
-      --teal-tint: #f0fdfa;
-      --border: #e2e8f0;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 10px 25px rgba(15, 23, 42, 0.08);
+      --bg-dark: #070b14;
+      --bg-card: #111827;
+      --bg-card-2: #172033;
+      --border: rgba(148, 163, 184, 0.18);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --blue: #3b82f6;
+      --blue-deep: #1d4ed8;
+      --violet: #7c3aed;
+      --teal: #14b8a6;
+      --amber: #f59e0b;
+      --rose: #ef4444;
+      --emerald: #10b981;
       --r-xl: 22px;
       --r-lg: 16px;
       --r-md: 12px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.8;
+      background: radial-gradient(circle at top, #101b33 0%, var(--bg-dark) 55%);
+      color: var(--text);
+      line-height: 1.75;
       min-height: 100vh;
     }
 
-    .nav-wrap {
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 40;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
+      z-index: 60;
+      background: rgba(11, 17, 30, 0.92);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-inner {
-      max-width: 1140px;
+    .topbar-inner {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.9rem;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
 
-    .brand-link {
+    .icon-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .icon-btn {
+      height: 40px;
+      padding: 0 0.78rem;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      font-weight: 900;
-      font-size: 1.08rem;
-      color: var(--primary-deep);
-      text-decoration: none;
+      gap: 0.35rem;
+      transition: 0.16s ease;
     }
 
-    .brand-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--teal));
+    .icon-btn.is-active {
+      background: var(--violet);
+      border-color: var(--violet);
       color: #ffffff;
+    }
+
+    .util-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .util-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
-    }
-
-    .menu-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    .menu-btn {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--ink);
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--r-md);
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.18s ease;
-    }
-
-    .menu-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .menu-btn.is-active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .hero-shell {
-      max-width: 1140px;
-      margin: 1.25rem auto 0;
-      padding: 0 1rem;
-    }
-
-    .hero-card {
-      background: linear-gradient(130deg, #0f172a 0%, #1d4ed8 55%, #0f766e 100%);
-      color: #ffffff;
-      border-radius: var(--r-xl);
-      padding: 1.9rem 1.5rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    .hero-pill {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 0.2rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-bottom: 0.65rem;
-    }
-
-    .hero-card h1 {
-      font-size: 1.58rem;
-      font-weight: 900;
-      margin-bottom: 0.45rem;
-    }
-
-    .hero-card p {
-      color: rgba(255, 255, 255, 0.92);
-      font-size: 0.95rem;
-      max-width: 760px;
     }
 
     .container {
-      max-width: 1140px;
-      margin: 1.4rem auto 2rem;
-      padding: 0 1rem;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.2rem 0.95rem 2.5rem;
     }
 
-    .section-panel {
-      display: none;
-    }
-
-    .section-panel.is-visible {
-      display: block;
-    }
-
-    .heading-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .heading-row h2 {
-      font-size: 1.22rem;
-      font-weight: 800;
-    }
-
-    .grades-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .grade-tile {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 0.95rem 1rem;
-      text-align: right;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.18s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .grade-tile:hover {
-      border-color: var(--primary);
-      transform: translateY(-2px);
-    }
-
-    .grade-tile.is-selected {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #ffffff;
-    }
-
-    .grade-tile .g-title {
-      font-size: 0.96rem;
-      font-weight: 800;
-    }
-
-    .grade-tile .g-meta {
-      font-size: 0.82rem;
-      opacity: 0.85;
-      font-weight: 600;
-    }
-
-    .workspace-box {
-      background: var(--surface);
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(29, 78, 216, 0.35), rgba(13, 148, 136, 0.25));
       border: 1px solid var(--border);
       border-radius: var(--r-xl);
-      padding: 1.3rem;
-      box-shadow: var(--shadow-sm);
+      padding: 1.4rem 1.2rem;
+      margin-bottom: 1.3rem;
     }
 
-    .workspace-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.65rem;
-      padding-bottom: 0.9rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 1rem;
-    }
-
-    .workspace-top h3 {
-      font-size: 1.16rem;
-      font-weight: 800;
-      color: var(--primary-deep);
-    }
-
-    .chip {
-      display: inline-block;
-      background: var(--primary-tint);
-      color: var(--primary-deep);
-      border: 1px solid #bfdbfe;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.2rem 0.65rem;
-      border-radius: 999px;
-      margin-inline-start: 0.35rem;
-    }
-
-    .chip.teal {
-      background: var(--teal-tint);
-      color: #115e59;
-      border-color: #99f6e4;
-    }
-
-    .sub-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .sub-btn {
-      border: 1px solid var(--border);
-      background: var(--surface-soft);
-      color: var(--ink);
-      padding: 0.45rem 0.9rem;
-      border-radius: var(--r-md);
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .sub-btn.is-active {
-      background: var(--teal);
-      border-color: var(--teal);
-      color: #ffffff;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 1rem;
-    }
-
-    .info-card {
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 1.15rem;
-    }
-
-    .container > .section-panel > .cards-grid .info-card,
-    .lab-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 1.2rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .info-card h4, .info-card h3 {
-      font-size: 1.03rem;
-      font-weight: 800;
-      margin: 0.35rem 0 0.45rem;
-    }
-
-    .info-card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 0.45rem;
-    }
-
-    .chapter-list {
-      padding-right: 1.25rem;
-      margin-top: 0.5rem;
-      font-size: 0.92rem;
-    }
-
-    .chapter-list li {
+    .hero-banner h1 {
+      font-size: 1.45rem;
+      font-weight: 900;
       margin-bottom: 0.35rem;
     }
 
-    .math-box {
-      background: var(--surface);
+    .hero-banner p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.is-open {
+      display: block;
+    }
+
+    .stage-group {
+      background: rgba(17, 24, 39, 0.75);
       border: 1px solid var(--border);
-      border-right: 4px solid var(--primary);
-      border-radius: var(--r-md);
-      padding: 0.65rem;
-      text-align: center;
-      direction: ltr;
-      overflow-x: auto;
-      margin-top: 0.6rem;
+      border-radius: var(--r-xl);
+      padding: 1rem;
+      margin-bottom: 1.15rem;
     }
 
-    .outcome-box {
-      background: var(--teal-tint);
-      color: #115e59;
-      border: 1px solid #99f6e4;
-      border-radius: var(--r-md);
-      padding: 0.8rem 1rem;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-top: 0.65rem;
+    .stage-label {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #cbd5e1;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .drag-card {
-      margin-top: 1.15rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 1.15rem;
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
     }
 
-    .drag-area {
+    @media (max-width: 640px) {
+      .three-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+      }
+    }
+
+    .grade-card {
       position: relative;
-      height: 290px;
-      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      overflow: hidden;
-      touch-action: none;
-      user-select: none;
-      margin: 0.75rem 0;
-    }
-
-    .glass-beaker {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 145px;
-      height: 175px;
-      border: 3px solid #334155;
-      border-top: none;
-      border-radius: 0 0 14px 14px;
-      background: rgba(255, 255, 255, 0.55);
-      overflow: hidden;
-    }
-
-    .liquid-level {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 90px;
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.55), rgba(2, 132, 199, 0.78));
-      border-top: 2px solid #0284c7;
-      transition: height 0.12s ease-out;
-    }
-
-    .cube-item {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 68px;
-      height: 68px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #d97706, #92400e);
-      color: #ffffff;
-      border: 2px solid #78350f;
+      background: var(--bg-card-2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 0.95rem 0.55rem 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 0.76rem;
+      gap: 0.45rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .grade-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--blue);
+    }
+
+    .grade-num {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.55rem;
+      font-size: 1.15rem;
+      font-weight: 900;
+      opacity: 0.25;
+    }
+
+    .grade-emoji {
+      font-size: 1.55rem;
+      line-height: 1.1;
+    }
+
+    .grade-name {
+      font-size: 0.88rem;
       font-weight: 800;
-      cursor: grab;
-      z-index: 5;
-      touch-action: none;
     }
 
-    .slider-row {
-      margin: 1rem 0;
-      max-width: 420px;
+    .grade-chapters-badge {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.65);
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
     }
 
-    .slider-row label {
+    .pill-cta {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .c-teal { background: #0d9488; }
+    .c-amber { background: #d97706; }
+    .c-blue { background: #2563eb; }
+    .c-violet { background: #7c3aed; }
+    .c-emerald { background: #059669; }
+    .c-rose { background: #e11d48; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(2, 6, 23, 0.78);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 540px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .modal-head {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .modal-head h3 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .modal-head p {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 0.2rem;
+    }
+
+    .close-x {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(15, 23, 42, 0.35);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .modal-body {
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .hub-tile {
+      background: var(--bg-card-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 0.95rem;
+      text-align: right;
+      cursor: pointer;
+      color: var(--text);
+      transition: border-color 0.15s ease;
+    }
+
+    .hub-tile.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .hub-tile:hover {
+      border-color: var(--blue);
+    }
+
+    .hub-tile strong {
       display: block;
-      font-size: 0.92rem;
+      font-size: 0.98rem;
+      margin-top: 0.25rem;
+    }
+
+    .hub-tile span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .filter-strip {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .filter-pill {
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 0.82rem;
       font-weight: 700;
+      cursor: pointer;
+    }
+
+    .filter-pill.is-active {
+      background: var(--text);
+      color: var(--bg-dark);
+      border-color: var(--text);
+    }
+
+    .mindmap-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 1.4rem 1rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+
+    .center-node {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0891b2, #0e7490);
+      color: #ffffff;
+      font-weight: 900;
+      margin: 0.8rem auto 1.1rem;
+      box-shadow: 0 10px 25px rgba(8, 145, 178, 0.35);
+    }
+
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .branch-node {
+      background: var(--bg-card-2);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--r-md);
+      padding: 0.75rem;
+      text-align: right;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .branch-node strong {
+      display: block;
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .branch-node small {
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .cards-stack {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .lesson-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.1rem;
+    }
+
+    .lesson-card.is-free {
+      border-color: rgba(16, 185, 129, 0.55);
+    }
+
+    .lesson-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .code-tag {
+      background: var(--blue);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 0.8rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 8px;
+    }
+
+    .free-tag {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .type-tag {
+      display: inline-block;
+      background: rgba(217, 119, 6, 0.22);
+      color: #fbbf24;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 0.12rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.45rem;
+    }
+
+    .lesson-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
       margin-bottom: 0.4rem;
     }
 
-    .slider-row input[type="range"] {
-      width: 100%;
-      accent-color: var(--primary);
+    .lesson-card p {
+      color: #cbd5e1;
+      font-size: 0.88rem;
     }
 
-    .site-footer {
-      max-width: 1140px;
-      margin: 0 auto 2.5rem;
-      padding: 0 1rem;
+    .reader-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
     }
 
-    .footer-box {
-      background: var(--surface);
+    .mode-switch {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .mode-btn {
+      padding: 0.42rem 0.85rem;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card-2);
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mode-btn.is-active {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #ffffff;
+    }
+
+    .book-sheet {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: var(--r-lg);
+      padding: 1.3rem 1.2rem;
+      border-top: 6px solid #0f766e;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .book-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #0f766e;
+      padding-bottom: 0.55rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f766e;
+    }
+
+    .chapter-banner {
+      background: #1e3a8a;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 0.9rem;
+    }
+
+    .lessons-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .lesson-box {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.55rem;
+      font-size: 0.8rem;
+      background: #f8fafc;
+    }
+
+    .def-callout {
+      border-right: 4px solid #0d9488;
+      background: #f0fdfa;
+      padding: 0.7rem 0.85rem;
+      border-radius: 8px;
+      margin-bottom: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .lab-stage {
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--r-xl);
-      padding: 1.3rem;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
+      padding: 1.2rem;
     }
 
-    .footer-box h3 {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--primary-deep);
-      margin-bottom: 0.75rem;
-    }
-
-    .footer-links {
+    .spring-visual {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: var(--r-lg);
+      padding: 1.2rem;
+      margin: 0.9rem 0;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.7rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .spring-bar {
+      width: 140px;
+      height: 6px;
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    .spring-coil {
+      width: 46px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #1e293b 0px,
+        #1e293b 4px,
+        transparent 4px,
+        transparent 9px
+      );
+      border-left: 3px solid #1e293b;
+      border-right: 3px solid #1e293b;
+      transition: height 0.15s ease;
+    }
+
+    .mass-block {
+      background: #2563eb;
+      color: #ffffff;
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.82rem;
+    }
+
+    .formula-box {
+      background: var(--bg-card-2);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--blue);
+      border-radius: var(--r-md);
+      padding: 0.7rem;
+      direction: ltr;
+      text-align: center;
+      margin-top: 0.65rem;
+      overflow-x: auto;
+    }
+
+    .footer-shell {
+      max-width: 1120px;
+      margin: 0 auto 2.5rem;
+      padding: 0 0.95rem;
+    }
+
+    .footer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .footer-card h3 {
+      font-size: 1.05rem;
+      color: #93c5fd;
       margin-bottom: 0.7rem;
     }
 
-    .footer-pill {
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: 0.45rem 0.9rem;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--ink);
-      text-decoration: none;
+    .footer-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
     }
 
-    .footer-copy {
+    .footer-chip {
+      background: var(--bg-card-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--r-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .footer-sub {
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
   </style>
 </head>
 <body>
-  <header class="nav-wrap">
-    <div class="nav-inner">
-      <a class="brand-link" href="#home" onclick="switchSection('home'); return false;">
-        <span class="brand-badge">Φ</span>
-        <span>مكتبتي التعليمية</span>
-      </a>
-      <nav class="menu-bar" id="topMenu">
-        <button type="button" class="menu-btn is-active" data-section="home" onclick="switchSection('home')">الرئيسية</button>
-        <button type="button" class="menu-btn" data-section="grades" onclick="switchSection('grades')">الصفوف الدراسية</button>
-        <button type="button" class="menu-btn" data-section="examples" onclick="switchSection('examples')">المسائل الفيزيائية</button>
-        <button type="button" class="menu-btn" data-section="free-lab" onclick="switchSection('free-lab')">المختبر الحر</button>
-        <button type="button" class="menu-btn" data-section="formulas" onclick="switchSection('formulas')">القوانين</button>
-      </nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="icon-nav" id="mainNav">
+        <button type="button" class="icon-btn is-active" data-nav="home" onclick="switchMainView('home')">🏠 الرئيسية</button>
+        <button type="button" class="icon-btn" data-nav="lab" onclick="switchMainView('lab')">🧪 المختبر والتجارب</button>
+        <button type="button" class="icon-btn" data-nav="reader" onclick="switchMainView('reader')">📖 الكتاب والملخص</button>
+        <button type="button" class="icon-btn" data-nav="formulas" onclick="switchMainView('formulas')">∑ القوانين</button>
+      </div>
+      <div class="util-group">
+        <button type="button" class="util-btn" title="المرحلة الدراسية" onclick="switchMainView('home')">🎓</button>
+        <button type="button" class="util-btn" id="soundToggleBtn" title="تنبيه الصوت" onclick="toggleSoundHint()">🔊</button>
+        <button type="button" class="util-btn" id="themeToggleBtn" title="تبديل الإضاءة" onclick="toggleLightMode()">🌙</button>
+      </div>
     </div>
   </header>
 
-  <section class="hero-shell">
-    <div class="hero-card">
-      <span class="hero-pill">منصة الفيزياء التفاعلية</span>
-      <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
-      <p>الكتب الدراسية، عدد الفصول، الأنشطة، المسائل الفيزيائية، والتجارب العملية من الأول المتوسط إلى السادس الإعدادي.</p>
-    </div>
-  </section>
-
   <main class="container">
-    <section id="home" class="section-panel is-visible">
-      <div class="heading-row">
-        <h2>اختر الصف الدراسي</h2>
-      </div>
-      <div class="grades-grid" id="homeGradesList">
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g1m')">
-          <span class="g-title">الصف الأول المتوسط</span>
-          <span class="g-meta">6 فصول • المرحلة المتوسطة</span>
-        </button>
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g2m')">
-          <span class="g-title">الصف الثاني المتوسط</span>
-          <span class="g-meta">6 فصول • المرحلة المتوسطة</span>
-        </button>
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g3m')">
-          <span class="g-title">الصف الثالث المتوسط</span>
-          <span class="g-meta">9 فصول • المرحلة المتوسطة</span>
-        </button>
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g4s')">
-          <span class="g-title">الصف الرابع العلمي</span>
-          <span class="g-meta">9 فصول • المرحلة الإعدادية</span>
-        </button>
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g5s')">
-          <span class="g-title">الصف الخامس العلمي</span>
-          <span class="g-meta">9 فصول • المرحلة الإعدادية</span>
-        </button>
-        <button type="button" class="grade-tile" onclick="openGradeDirect('g6s')">
-          <span class="g-title">الصف السادس العلمي</span>
-          <span class="g-meta">8 فصول • المرحلة الإعدادية</span>
-        </button>
-      </div>
+    <section class="hero-banner">
+      <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
+      <p>اختر الصف الدراسي لفتح لوحة التجارب والأنشطة، الكتاب والملخص، خرائط الفصول، والقوانين الفيزيائية.</p>
     </section>
 
-    <section id="grades" class="section-panel">
-      <div class="heading-row">
-        <h2>الصفوف الدراسية (الأول المتوسط — السادس الإعدادي)</h2>
-      </div>
-
-      <div class="grades-grid" id="gradesSelectorList">
-        <button type="button" class="grade-tile is-selected" data-g="g1m" onclick="selectGradeDirect('g1m')">
-          <span class="g-title">الصف الأول المتوسط</span>
-          <span class="g-meta">6 فصول</span>
-        </button>
-        <button type="button" class="grade-tile" data-g="g2m" onclick="selectGradeDirect('g2m')">
-          <span class="g-title">الصف الثاني المتوسط</span>
-          <span class="g-meta">6 فصول</span>
-        </button>
-        <button type="button" class="grade-tile" data-g="g3m" onclick="selectGradeDirect('g3m')">
-          <span class="g-title">الصف الثالث المتوسط</span>
-          <span class="g-meta">9 فصول</span>
-        </button>
-        <button type="button" class="grade-tile" data-g="g4s" onclick="selectGradeDirect('g4s')">
-          <span class="g-title">الصف الرابع العلمي</span>
-          <span class="g-meta">9 فصول</span>
-        </button>
-        <button type="button" class="grade-tile" data-g="g5s" onclick="selectGradeDirect('g5s')">
-          <span class="g-title">الصف الخامس العلمي</span>
-          <span class="g-meta">9 فصول</span>
-        </button>
-        <button type="button" class="grade-tile" data-g="g6s" onclick="selectGradeDirect('g6s')">
-          <span class="g-title">الصف السادس العلمي</span>
-          <span class="g-meta">8 فصول</span>
-        </button>
-      </div>
-
-      <div class="workspace-box">
-        <div class="workspace-top">
-          <h3 id="gradeHeading">الصف الأول المتوسط</h3>
-          <div>
-            <span class="chip teal" id="gradeStageChip">المرحلة المتوسطة</span>
-            <span class="chip" id="gradeChaptersChip">عدد الفصول: 6</span>
+    <!-- الصفحة الرئيسية: الصفوف حسب المراحل -->
+    <section id="view-home" class="view-section is-open">
+      <div class="stage-group">
+        <div class="stage-label">المرحلة المتوسطة</div>
+        <div class="three-grid">
+          <div class="grade-card" onclick="openGradeHub('g1m')">
+            <span class="grade-num">1</span>
+            <span class="grade-emoji">🧪</span>
+            <span class="grade-name">الأول المتوسط</span>
+            <span class="grade-chapters-badge">6 فصول</span>
+            <button type="button" class="pill-cta c-teal">الكتاب والملخص</button>
+          </div>
+          <div class="grade-card" onclick="openGradeHub('g2m')">
+            <span class="grade-num">2</span>
+            <span class="grade-emoji">🚀</span>
+            <span class="grade-name">الثاني المتوسط</span>
+            <span class="grade-chapters-badge">6 فصول</span>
+            <button type="button" class="pill-cta c-amber">الكتاب والملخص</button>
+          </div>
+          <div class="grade-card" onclick="openGradeHub('g3m')">
+            <span class="grade-num">3</span>
+            <span class="grade-emoji">🔋</span>
+            <span class="grade-name">الثالث المتوسط</span>
+            <span class="grade-chapters-badge">9 فصول</span>
+            <button type="button" class="pill-cta c-blue">الكتاب والملخص</button>
           </div>
         </div>
+      </div>
 
-        <div class="sub-bar" id="subTabsBar">
-          <button type="button" class="sub-btn is-active" data-subtab="book" onclick="switchSubtab('book')">الكتاب والفصول</button>
-          <button type="button" class="sub-btn" data-subtab="activities" onclick="switchSubtab('activities')">الأنشطة</button>
-          <button type="button" class="sub-btn" data-subtab="experiments" onclick="switchSubtab('experiments')">التجارب العملية</button>
+      <div class="stage-group">
+        <div class="stage-label">المرحلة الإعدادية — الفرع العلمي</div>
+        <div class="three-grid">
+          <div class="grade-card" onclick="openGradeHub('g4s')">
+            <span class="grade-num">4</span>
+            <span class="grade-emoji">🔭</span>
+            <span class="grade-name">الرابع العلمي</span>
+            <span class="grade-chapters-badge">9 فصول</span>
+            <button type="button" class="pill-cta c-violet">الكتاب والملخص</button>
+          </div>
+          <div class="grade-card" onclick="openGradeHub('g5s')">
+            <span class="grade-num">5</span>
+            <span class="grade-emoji">🧭</span>
+            <span class="grade-name">الخامس العلمي</span>
+            <span class="grade-chapters-badge">9 فصول</span>
+            <button type="button" class="pill-cta c-emerald">الكتاب والملخص</button>
+          </div>
+          <div class="grade-card" onclick="openGradeHub('g6s')">
+            <span class="grade-num">6</span>
+            <span class="grade-emoji">🎓</span>
+            <span class="grade-name">السادس العلمي</span>
+            <span class="grade-chapters-badge">8 فصول</span>
+            <button type="button" class="pill-cta c-rose">الكتاب والملخص</button>
+          </div>
         </div>
-
-        <div id="gradeWorkspaceBody"></div>
       </div>
     </section>
 
-    <section id="examples" class="section-panel">
-      <div class="heading-row">
-        <h2>المسائل الفيزيائية المحلولة</h2>
+    <!-- قسم التجارب والأنشطة وخرائط الفصول -->
+    <section id="view-lab" class="view-section">
+      <div class="filter-strip" id="gradeFilterBar">
+        <button type="button" class="filter-pill is-active" data-fg="g1m" onclick="setActiveGrade('g1m')">الأول المتوسط</button>
+        <button type="button" class="filter-pill" data-fg="g2m" onclick="setActiveGrade('g2m')">الثاني المتوسط</button>
+        <button type="button" class="filter-pill" data-fg="g3m" onclick="setActiveGrade('g3m')">الثالث المتوسط</button>
+        <button type="button" class="filter-pill" data-fg="g4s" onclick="setActiveGrade('g4s')">الرابع العلمي</button>
+        <button type="button" class="filter-pill" data-fg="g5s" onclick="setActiveGrade('g5s')">الخامس العلمي (9 فصول)</button>
+        <button type="button" class="filter-pill" data-fg="g6s" onclick="setActiveGrade('g6s')">السادس العلمي</button>
       </div>
-      <div class="cards-grid">
-        <article class="info-card">
-          <span class="chip">حركة خطية</span>
-          <h3>مسألة 1: حساب السرعة النهائية</h3>
-          <p><strong>المسألة:</strong> جسم يبدأ حركته من السكون ($v_0 = 0$) بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$. احسب سرعته النهائية.</p>
-          <p><strong>الحل:</strong> $v = 0 + 3 \times 4 = 12\,\text{m/s}$.</p>
-          <div class="math-box">$$v = v_0 + a t$$</div>
-        </article>
-        <article class="info-card">
-          <span class="chip teal">كهرباء</span>
-          <h3>مسألة 2: حساب المقاومة الكهربائية</h3>
-          <p><strong>المسألة:</strong> موصل يمر فيه تيار شدته $I = 2\,\text{A}$ عندما يكون فرق الجهد بين طرفيه $V = 12\,\text{V}$. احسب مقاومته.</p>
-          <p><strong>الحل:</strong> $R = \frac{12}{2} = 6\,\Omega$.</p>
-          <div class="math-box">$$R = \frac{V}{I}$$</div>
-        </article>
-      </div>
-    </section>
 
-    <section id="free-lab" class="section-panel">
-      <div class="heading-row">
-        <h2>المختبر الحر — محاكاة البندول</h2>
-      </div>
-      <div class="lab-card">
-        <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
-        <div class="slider-row">
-          <label for="pendulumLen">طول الخيط $L$: <span id="pendulumLenVal">1.0</span> m</label>
-          <input id="pendulumLen" type="range" min="0.2" max="3.0" step="0.1" value="1.0" oninput="calcPendulum()" />
-        </div>
-        <div class="outcome-box" id="pendulumOutput">الزمن الدوري التقريبي: 2.01 ثانية</div>
-      </div>
-    </section>
+      <div class="filter-strip" id="chapterFilterBar"></div>
 
-    <section id="formulas" class="section-panel">
-      <div class="heading-row">
-        <h2>القوانين الفيزيائية</h2>
-      </div>
-      <div class="cards-grid">
-        <article class="info-card">
-          <span class="chip">طاقة</span>
-          <h3>الطاقة الحركية</h3>
-          <div class="math-box">$$K = \frac{1}{2} m v^2$$</div>
-        </article>
-        <article class="info-card">
-          <span class="chip teal">موجات</span>
-          <h3>سرعة انتشار الموجة</h3>
-          <div class="math-box">$$v = \lambda f$$</div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-box">
-      <h3>إشراف وتواصل — مكتبتي التعليمية</h3>
-      <div class="footer-links">
-        <span class="footer-pill">الأستاذ امير الخاقاني</span>
-        <a class="footer-pill" href="tel:07818761812" dir="ltr">07818761812</a>
-        <a class="footer-pill" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">@Taech_ameer</a>
-      </div>
-      <p class="footer-copy">مكتبتي التعليمية — مختبر الفيزياء</p>
-    </div>
-  </footer>
-
-  <script>
-    const curriculum = {
-      g1m: {
-        name: "الصف الأول المتوسط",
-        stage: "المرحلة المتوسطة",
-        chaptersCount: 6,
-        bookTitle: "كتاب الفيزياء — الأول المتوسط",
-        chapters: [
-          "الفصل الأول: خواص المادة",
-          "الفصل الثاني: القوة",
-          "الفصل الثالث: الضغط",
-          "الفصل الرابع: الحرارة",
-          "الفصل الخامس: أثر الحرارة في المواد",
-          "الفصل السادس: موضوعات المنهج المقررة"
-        ],
-        activities: [
-          {
-            tag: "خواص المادة",
-            title: "قياس حجم جسم صلب غير منتظم بالإزاحة",
-            steps: "نضع ماءً في مخبار مدرج، نسجل قراءته، ثم نغمر الجسم الصلب ونطرح القراءتين.",
-            conclusion: "حجم الجسم يساوي حجم الماء المزاح."
-          },
-          {
-            tag: "الحرارة",
-            title: "تأثير التسخين في تمدد الأجسام",
-            steps: "نختبر مرور كرة معدنية في حلقة قبل التسخين وبعده.",
-            conclusion: "تتمدد المواد بالحرارة وتزداد أبعادها."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الأول — تجربة تفاعلية باليد",
-            title: "الإزاحة والكثافة في المخبار المدرج",
-            desc: "اسحب المكعب باللمس أو الماوس إلى داخل الماء لمشاهدة ارتفاع مستوى الماء وحساب الحجم المزاح.",
-            formula: "$$\\rho = \\frac{m}{V}$$",
-            interactiveDrag: true
-          },
-          {
-            tag: "الفصل الثالث — الضغط",
-            title: "ضغط السوائل مع العمق",
-            desc: "يزداد ضغط السائل بزيادة عمقه تحت السطح الحر للسائل.",
-            formula: "$$P = \\rho g h$$"
-          },
-          {
-            tag: "الفصل الرابع — الحرارة",
-            title: "العلاقة بين الحرارة والتغير في درجة الحرارة",
-            desc: "تعتمد كمية الحرارة المكتسبة أو المفقودة على كتلة المادة وحرارتها النوعية والتغير في درجة حرارتها.",
-            formula: "$$Q = c \\cdot m \\cdot \\Delta T$$"
-          }
-        ]
-      },
-      g2m: {
-        name: "الصف الثاني المتوسط",
-        stage: "المرحلة المتوسطة",
-        chaptersCount: 6,
-        bookTitle: "كتاب الفيزياء — الثاني المتوسط",
-        chapters: [
-          "الفصل الأول: الحركة",
-          "الفصل الثاني: قوانين الحركة",
-          "الفصل الثالث: الشغل والقدرة والطاقة",
-          "الفصل الرابع: الآلات البسيطة",
-          "الفصل الخامس: الحركة الموجية والصوت",
-          "الفصل السادس: الضوء"
-        ],
-        activities: [
-          {
-            tag: "الحركة",
-            title: "تمثيل الحركة بيانياً",
-            steps: "نسجل المسافة والزمن ونرسم العلاقة البيانية بينهما.",
-            conclusion: "الميل المنتظم يمثل سرعة ثابتة."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الأول — السرعة",
-            title: "حساب السرعة المتوسطة",
-            desc: "النسبة بين المسافة الكلية والزمن الكلي المستغرق.",
-            formula: "$$v = \\frac{d}{t}$$"
-          },
-          {
-            tag: "الفصل الثاني — القوة",
-            title: "قانون نيوتن الثاني",
-            desc: "تتناسب محصلة القوى المؤثرة في جسم طردياً مع تعجيله بثبوت الكتلة.",
-            formula: "$$F = m \\cdot a$$"
-          },
-          {
-            tag: "الفصل الثالث — الشغل",
-            title: "حساب الشغل الميكانيكي",
-            desc: "الشغل يساوي حاصل ضرب القوة في الإزاحة باتجاهها.",
-            formula: "$$W = F \\cdot d$$"
-          },
-          {
-            tag: "الفصل الخامس — الموجات",
-            title: "سرعة انتشار الموجة",
-            desc: "تساوي حاصل ضرب الطول الموجي في تردد الموجة.",
-            formula: "$$v = \\lambda \\cdot f$$"
-          }
-        ]
-      },
-      g3m: {
-        name: "الصف الثالث المتوسط",
-        stage: "المرحلة المتوسطة",
-        chaptersCount: 9,
-        bookTitle: "كتاب الفيزياء — الثالث المتوسط",
-        chapters: [
-          "الفصل الأول: الكهربائية الساكنة",
-          "الفصل الثاني: المغناطيسية",
-          "الفصل الثالث: التيار الكهربائي",
-          "الفصل الرابع: البطارية والقوة الدافعة الكهربائية",
-          "الفصل الخامس: الطاقة والقدرة الكهربائية",
-          "الفصل السادس: الكهربائية والمغناطيسية",
-          "الفصل السابع: المحولة الكهربائية",
-          "الفصل الثامن: تكنولوجيا مصادر الطاقة",
-          "الفصل التاسع: فيزياء الجو وتقنية الاتصالات الحديثة"
-        ],
-        activities: [
-          {
-            tag: "الكهربائية الساكنة",
-            title: "الكشاف الكهربائي",
-            steps: "تقريب جسم مشحون من قرص الكشاف وملاحظة انفراج الورقتين.",
-            conclusion: "انفراج الورقتين يدل على وجود شحنة كهربائية."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الثالث — قانون أوم",
-            title: "العلاقة بين فرق الجهد والتيار",
-            desc: "المقاومة تساوي ناتج قسمة فرق الجهد على التيار الكهربائي.",
-            formula: "$$R = \\frac{V}{I}$$"
-          },
-          {
-            tag: "الفصل الرابع — القوة الدافعة",
-            title: "القوة الدافعة الكهربائية (emf)",
-            desc: "تمثل مقدار الطاقة المكتسبة لكل وحدة شحنة.",
-            formula: "$$\\varepsilon = \\frac{W}{q}$$"
-          },
-          {
-            tag: "الفصل الخامس — القدرة",
-            title: "حساب القدرة الكهربائية",
-            desc: "القدرة الكهربائية تساوي حاصل ضرب التيار في فرق الجهد.",
-            formula: "$$P = I \\cdot V$$"
-          },
-          {
-            tag: "الفصل السابع — المحولة",
-            title: "نسبة التحويل في المحولة الكهربائية",
-            desc: "العلاقة بين عدد لفات الملفين وفولتية كل منهما.",
-            formula: "$$\\frac{N_2}{N_1} = \\frac{V_2}{V_1}$$"
-          }
-        ]
-      },
-      g4s: {
-        name: "الصف الرابع العلمي",
-        stage: "المرحلة الإعدادية",
-        chaptersCount: 9,
-        bookTitle: "كتاب الفيزياء — الرابع العلمي",
-        chapters: [
-          "الفصل الأول: مفاهيم أساسية في الفيزياء",
-          "الفصل الثاني: الخصائص الميكانيكية للمادة",
-          "الفصل الثالث: الموائع الساكنة",
-          "الفصل الرابع: انكسار الضوء",
-          "الفصل الخامس: المرايا",
-          "الفصل السادس: العدسات الرقيقة",
-          "الفصل السابع: الكهرباء الساكنة",
-          "الفصل الثامن: فصول المنهج المقررة",
-          "الفصل التاسع: فصول المنهج المقررة"
-        ],
-        activities: [
-          {
-            tag: "المتجهات",
-            title: "تحليل وجمع المتجهات",
-            steps: "تحليل المتجهات إلى مركبات أفقية وشاقولية ثم جمعها.",
-            conclusion: "المحصلة تعتمد على المقدار والزاوية."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الثاني — المرونة",
-            title: "قانون هوك والاجهاد والمطاوعة",
-            desc: "ضمن حد المرونة يتناسب الإجهاد طردياً مع المطاوعة.",
-            formula: "$$E = \\frac{\\text{Stress}}{\\text{Strain}}$$"
-          },
-          {
-            tag: "الفصل الثالث — الموائع",
-            title: "الضغط في الموائع الساكنة",
-            desc: "يزداد الضغط بزيادة عمق النقطة داخل المائع الساكن.",
-            formula: "$$P = P_0 + \\rho g h$$"
-          },
-          {
-            tag: "الفصل الرابع — الانكسار",
-            title: "قانون سنل في انكسار الضوء",
-            desc: "يربط معامل انكسار الوسطين بزاويتي السقوط والانكسار.",
-            formula: "$$n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$$"
-          },
-          {
-            tag: "الفصل السابع — كولوم",
-            title: "قانون كولوم للقوة الكهربائية",
-            desc: "القوة المتبادلة بين شحنتين نقطيتين تتناسب طردياً مع حاصل ضربهما وعكسياً مع مربع المسافة بينهما.",
-            formula: "$$F = k_e \\frac{|q_1 q_2|}{r^2}$$"
-          }
-        ]
-      },
-      g5s: {
-        name: "الصف الخامس العلمي",
-        stage: "المرحلة الإعدادية",
-        chaptersCount: 9,
-        bookTitle: "كتاب الفيزياء — الخامس العلمي",
-        chapters: [
-          "الفصل الأول: المتجهات",
-          "الفصل الثاني: الحركة",
-          "الفصل الثالث: قوانين الحركة",
-          "الفصل الرابع: الاتزان والعزوم",
-          "الفصل الخامس: الشغل والقدرة والطاقة والزخم",
-          "الفصل السادس: الحركة الدائرية والدورانية",
-          "الفصل السابع: الثرموديناميك",
-          "الفصل الثامن: الموجات والصوت",
-          "الفصل التاسع: البصريات"
-        ],
-        activities: [
-          {
-            tag: "الاتزان",
-            title: "مركز الثقل واتزان الأجسام",
-            steps: "موازنة الأوزان على مسافات مختلفة من نقطة الارتكاز.",
-            conclusion: "يتزن الجسم عندما تكون محصلة العزوم صفراً."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الثالث — قوانين الحركة",
-            title: "القوة والتعجيل والكتلة",
-            desc: "محصلة القوى المؤثرة في جسم تساوي كتلته في تعجيله.",
-            formula: "$$\\sum F = m a$$"
-          },
-          {
-            tag: "الفصل الرابع — العزوم",
-            title: "عزم القوة والاتزان الدوراني",
-            desc: "العزم يساوي حاصل ضرب القوة في الذراع العمودي.",
-            formula: "$$\\tau = r F \\sin\\theta$$"
-          },
-          {
-            tag: "الفصل السادس — الحركة الدائرية",
-            title: "التعجيل المركزي",
-            desc: "يحسب من مربع السرعة مقسوماً على نصف قطر المسار الدائري.",
-            formula: "$$a_c = \\frac{v^2}{r}$$"
-          },
-          {
-            tag: "الفصل السابع — الثرموديناميك",
-            title: "القانون الأول للثرموديناميك",
-            desc: "كمية الحرارة المضافة تساوي التغير في الطاقة الداخلية مضافاً إليه الشغل المنجز.",
-            formula: "$$Q = \\Delta U + W$$"
-          },
-          {
-            tag: "الفصل الثامن — الموجات",
-            title: "سرعة انتشار الموجة",
-            desc: "تربط بين سرعة الموجة وطولها الموجي وترددها.",
-            formula: "$$v = \\lambda f$$"
-          }
-        ]
-      },
-      g6s: {
-        name: "الصف السادس العلمي",
-        stage: "المرحلة الإعدادية",
-        chaptersCount: 8,
-        bookTitle: "كتاب الفيزياء — السادس العلمي",
-        chapters: [
-          "الفصل الأول: المتسعات",
-          "الفصل الثاني: الحث الكهرومغناطيسي",
-          "الفصل الثالث: دوائر التيار المتناوب",
-          "الفصل الرابع: الموجات الكهرومغناطيسية",
-          "الفصل الخامس: البصريات الفيزيائية",
-          "الفصل السادس: الفيزياء الحديثة",
-          "الفصل السابع: إلكترونيات الحالة الصلبة",
-          "الفصل الثامن: الأطياف الذرية والليزر (والنسبية/النووية حسب الطبعة)"
-        ],
-        activities: [
-          {
-            tag: "المتسعات",
-            title: "شحن وتفريغ متسعة",
-            steps: "مراقبة التيار والجهد أثناء شحن المتسعة وتفريغها.",
-            conclusion: "يزداد فرق الجهد تدريجياً أثناء الشحن."
-          }
-        ],
-        experiments: [
-          {
-            tag: "الفصل الأول — المتسعات",
-            title: "سعة المتسعة والطاقة المختزنة",
-            desc: "العلاقة بين الشحنة وفرق الجهد وسعة المتسعة.",
-            formula: "$$C = \\frac{q}{\\Delta V}$$"
-          },
-          {
-            tag: "الفصل الثاني — الحث",
-            title: "الحث الذاتي وقانون فاراداي",
-            desc: "تولد قوة دافعة كهربائية محتثة بتغير الفيض أو التيار مع الزمن.",
-            formula: "$$\\varepsilon_{ind} = -L \\frac{\\Delta I}{\\Delta t}$$"
-          },
-          {
-            tag: "الفصل الثالث — التيار المتناوب",
-            title: "الرنين في دائرة تيار متناوب",
-            desc: "تتساوى الرادة السعوية والرادة الحثية عند التردد الرنيني.",
-            formula: "$$X_L = X_C$$"
-          },
-          {
-            tag: "الفصل السادس — الحديثة",
-            title: "معادلة أينشتاين الكهروضوئية",
-            desc: "الطاقة الحركية العظمى للإلكترونات الضوئية المنبعثة.",
-            formula: "$$K_{max} = h f - w$$"
-          }
-        ]
-      }
-    };
-
-    let activeGrade = "g1m";
-    let activeSubtab = "book";
-
-    function refreshMath() {
-      if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
-        window.MathJax.typesetPromise().catch(function () {});
-      }
-    }
-
-    function switchSection(sectionId) {
-      document.querySelectorAll(".section-panel").forEach(function (panel) {
-        panel.classList.toggle("is-visible", panel.id === sectionId);
-      });
-      document.querySelectorAll("#topMenu .menu-btn").forEach(function (btn) {
-        btn.classList.toggle("is-active", btn.getAttribute("data-section") === sectionId);
-      });
-      refreshMath();
-    }
-
-    function setupDragLab() {
-      const area = document.getElementById("dragArea");
-      const cube = document.getElementById("cubeItem");
-      const liquid = document.getElementById("liquidLevel");
-      const status = document.getElementById("dragStatus");
-      if (!area || !cube || !liquid || !status) return;
-
-      const volumeCm3 = 60;
-      const baseHeight = 90;
-      let isDragging = false;
-      let dx = 0;
-      let dy = 0;
-
-      function recalc() {
-        const cRect = cube.getBoundingClientRect();
-        const lRect = liquid.getBoundingClientRect();
-        const overlapX = cRect.right > lRect.left + 8 && cRect.left < lRect.right - 8;
-
-        let ratio = 0;
-        if (overlapX && cRect.bottom > lRect.top) {
-          const px = Math.min(cRect.bottom, lRect.bottom) - Math.max(cRect.top, lRect.top);
-          ratio = Math.max(0, Math.min(1, px / cRect.height));
-        }
-
-        liquid.style.height = (baseHeight + ratio * 32) + "px";
-        const displaced = (ratio * volumeCm3).toFixed(1);
-        status.textContent =
-          ratio === 0
-            ? "اسحب المكعب بيدك نحو الماء لمشاهدة الإزاحة."
-            : "الحجم المزاح تقريباً: " + displaced + " cm³";
-      }
-
-      cube.addEventListener("pointerdown", function (e) {
-        isDragging = true;
-        cube.setPointerCapture(e.pointerId);
-        const r = cube.getBoundingClientRect();
-        dx = e.clientX - r.left;
-        dy = e.clientY - r.top;
-      });
-
-      cube.addEventListener("pointermove", function (e) {
-        if (!isDragging) return;
-        const aRect = area.getBoundingClientRect();
-        let left = e.clientX - aRect.left - dx;
-        let top = e.clientY - aRect.top - dy;
-        left = Math.max(6, Math.min(aRect.width - cube.offsetWidth - 6, left));
-        top = Math.max(6, Math.min(aRect.height - cube.offsetHeight - 14, top));
-        cube.style.left = left + "px";
-        cube.style.top = top + "px";
-        recalc();
-      });
-
-      function endDrag(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        if (e && cube.hasPointerCapture(e.pointerId)) {
-          cube.releasePointerCapture(e.pointerId);
-        }
-      }
-
-      cube.addEventListener("pointerup", endDrag);
-      cube.addEventListener("pointercancel", endDrag);
-      recalc();
-    }
-
-    function renderWorkspace() {
-      const data = curriculum[activeGrade];
-      const body = document.getElementById("gradeWorkspaceBody");
-      if (!data || !body) return;
-
-      if (activeSubtab === "book") {
-        body.innerHTML =
-          '<div class="info-card">' +
-            '<span class="chip">' + data.name + "</span>" +
-            "<h4>" + data.bookTitle + " — عدد الفصول: " + data.chaptersCount + "</h4>" +
-            '<ol class="chapter-list">' +
-              data.chapters.map(function (c) { return "<li>" + c + "</li>"; }).join("") +
-            "</ol>" +
-          "</div>";
-      } else if (activeSubtab === "activities") {
-        body.innerHTML =
-          '<div class="cards-grid">' +
-            data.activities.map(function (a) {
-              return (
-                '<article class="info-card">' +
-                  '<span class="chip teal">' + a.tag + "</span>" +
-                  "<h4>" + a.title + "</h4>" +
-                  "<p><strong>الخطوات:</strong> " + a.steps + "</p>" +
-                  '<div class="outcome-box"><strong>الاستنتاج:</strong> ' + a.conclusion + "</div>" +
-                "</article>"
-              );
-            }).join("") +
-          "</div>";
-      } else if (activeSubtab === "experiments") {
-        const hasDrag = data.experiments.some(function (x) { return x.interactiveDrag; });
-        body.innerHTML =
-          '<div class="cards-grid">' +
-            data.experiments.map(function (x) {
-              return (
-                '<article class="info-card">' +
-                  '<span class="chip">' + x.tag + "</span>" +
-                  "<h4>" + x.title + "</h4>" +
-                  "<p>" + x.desc + "</p>" +
-                  (x.formula ? '<div class="math-box">' + x.formula + "</div>" : "") +
-                "</article>"
-              );
-            }).join("") +
-          "</div>" +
-          (hasDrag
-            ? '<div class="drag-card">' +
-                "<h4>تجربة تفاعلية: اسحب المكعب إلى داخل الماء</h4>" +
-                '<div class="drag-area" id="dragArea">' +
-                  '<div class="cube-item" id="cubeItem">' +
-                    "<span>مكعب</span>" +
-                    "<span>60cm³</span>" +
-                  "</div>" +
-                  '<div class="glass-beaker">' +
-                    '<div class="liquid-level" id="liquidLevel"></div>' +
-                  "</div>" +
-                "</div>" +
-                '<div class="outcome-box" id="dragStatus">اسحب المكعب بيدك نحو الماء لمشاهدة الإزاحة.</div>' +
-              "</div>"
-            : "");
-        if (hasDrag) setupDragLab();
-      }
-
-      refreshMath();
-    }
-
-    function selectGradeDirect(gradeKey) {
-      if (!curriculum[gradeKey]) return;
-      activeGrade = gradeKey;
-      document.querySelectorAll("#gradesSelectorList .grade-tile").forEach(function (tile) {
-        tile.classList.toggle("is-selected", tile.getAttribute("data-g") === gradeKey);
-      });
-      const item = curriculum[gradeKey];
-      document.getElementById("gradeHeading").textContent = item.name;
-      document.getElementById("gradeStageChip").textContent = item.stage;
-      document.getElementById("gradeChaptersChip").textContent = "عدد الفصول: " + item.chaptersCount;
-      renderWorkspace();
-    }
-
-    function openGradeDirect(gradeKey) {
-      switchSection("grades");
-      selectGradeDirect(gradeKey);
-      const box = document.querySelector(".workspace-box");
-      if (box) {
-        box.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    function switchSubtab(subKey) {
-      activeSubtab = subKey;
-      document.querySelectorAll("#subTabsBar .sub-btn").forEach(function (btn) {
-        btn.classList.toggle("is-active", btn.getAttribute("data-subtab") === subKey);
-      });
-      renderWorkspace();
-    }
-
-    function calcPendulum() {
-      const slider = document.getElementById("pendulumLen");
-      const val = document.getElementById("pendulumLenVal");
-      const out = document.getElementById("pendulumOutput");
-      if (!slider || !val || !out) return;
-      const L = parseFloat(slider.value);
-      const g = 9.81;
-      const T = 2 * Math.PI * Math.sqrt(L / g);
-      val.textContent = L.toFixed(1);
-      out.textContent = "الزمن الدوري التقريبي: " + T.toFixed(2) + " ثانية";
-    }
-
-    renderWorkspace();
-  </script>
-</body>
-</html>
+      <div class="mindmap-wrap">
+   
