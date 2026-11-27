@@ -1,231 +1,652 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مختبر الفيزياء التفاعلي</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مكتبتي التعليمية | مختبر الفيزياء التفاعلي</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --ink: #0f172a;
+      --muted: #475569;
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-soft: #dbeafe;
+      --accent: #0d9488;
+      --accent-soft: #ccfbf1;
+      --line: #cbd5e1;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
 
-<style>
-* {
-  box-sizing: border-box;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  margin: 0;
-  font-family: Tahoma, Arial;
-  background: linear-gradient(135deg, #080d1b, #172044, #10172e);
-  color: white;
-}
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
 
-header {
-  padding: 25px;
-  text-align: center;
-  background: #111a30;
-  border-bottom: 1px solid #334466;
-}
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
 
-h1 {
-  color: #55b8ff;
-}
+    .topbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.8rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
+    .brand {
+      font-weight: 800;
+      font-size: 1.08rem;
+      color: var(--primary-dark);
+      text-decoration: none;
+    }
 
-.hero {
-  text-align: center;
-  padding: 35px 10px;
-}
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
-.hero p {
-  color: #a5b1d0;
-}
+    nav button {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 0.42rem 0.78rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-}
+    nav button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
 
-.card {
-  background: rgba(25, 36, 66, 0.85);
-  border: 1px solid #334466;
-  border-radius: 20px;
-  padding: 25px;
-  text-align: center;
-  transition: 0.3s;
-}
+    .hero {
+      max-width: 1120px;
+      margin: 1.4rem auto 0;
+      padding: 0 1rem;
+    }
 
-.card:hover {
-  transform: translateY(-5px);
-  border-color: #55b8ff;
-}
+    .hero-box {
+      background: linear-gradient(125deg, #0f172a 0%, #1e3a8a 60%, #0f766e 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.5rem;
+    }
 
-.icon {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
+    .hero-box h1 { font-size: 1.6rem; margin-bottom: 0.45rem; }
+    .hero-box p { color: rgba(255, 255, 255, 0.92); font-size: 0.96rem; }
 
-.card h2 {
-  font-size: 20px;
-}
+    main {
+      max-width: 1120px;
+      margin: 1.5rem auto 2rem;
+      padding: 0 1rem;
+    }
 
-.card p {
-  color: #a5b1d0;
-  font-size: 14px;
-}
+    .panel { display: none; }
+    .panel.active { display: block; }
 
-.card a {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 18px;
-  background: linear-gradient(135deg, #6258e8, #168fd0);
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-}
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
 
-/* قسم التواصل */
-.contact {
-  margin-top: 45px;
-  padding: 30px 20px;
-  text-align: center;
-  background: rgba(25, 36, 66, 0.85);
-  border: 1px solid #334466;
-  border-radius: 22px;
-}
+    .section-head h2 { font-size: 1.25rem; }
 
-.contact h2 {
-  color: #55b8ff;
-  margin-bottom: 10px;
-}
+    .grades-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.2rem;
+    }
 
-.contact p {
-  color: #c1cbe2;
-  line-height: 1.9;
-}
+    .grade-btn {
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+      border-radius: var(--radius-sm);
+      padding: 0.72rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
 
-.contact-buttons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
+    .grade-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
 
-.contact-buttons a {
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  background: linear-gradient(135deg, #6258e8, #168fd0);
-}
+    .grade-workspace {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
 
-.contact-buttons a:hover {
-  opacity: 0.85;
-}
+    .grade-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1rem;
+    }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #a5b1d0;
-  font-size: 14px;
-}
-</style>
+    .grade-header h3 { font-size: 1.18rem; color: var(--primary-dark); }
+
+    .subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .subtab-btn {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .subtab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+    }
+
+    main > .panel > .grid .card,
+    .sim-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.18rem 0.58rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag.teal {
+      background: var(--accent-soft);
+      color: #115e59;
+    }
+
+    .card h3, .card h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.5rem; }
+
+    .list-clean {
+      padding-right: 1.2rem;
+      margin-top: 0.45rem;
+      font-size: 0.92rem;
+    }
+
+    .list-clean li { margin-bottom: 0.35rem; }
+
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem;
+      text-align: center;
+      direction: ltr;
+      overflow-x: auto;
+      margin-top: 0.65rem;
+    }
+
+    .result-strip {
+      background: var(--accent-soft);
+      color: #115e59;
+      border: 1px solid #99f6e4;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      margin-top: 0.7rem;
+      font-size: 0.92rem;
+    }
+
+    .drag-lab {
+      margin-top: 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+    }
+
+    .drag-stage {
+      position: relative;
+      height: 290px;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      margin: 0.75rem 0;
+    }
+
+    .beaker {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 145px;
+      height: 175px;
+      border: 3px solid #334155;
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      background: rgba(255, 255, 255, 0.55);
+      overflow: hidden;
+    }
+
+    .water-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 90px;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.55), rgba(2, 132, 199, 0.78));
+      border-top: 2px solid #0284c7;
+      transition: height 0.12s ease-out;
+    }
+
+    .draggable-block {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 68px;
+      height: 68px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #d97706, #92400e);
+      color: #ffffff;
+      border: 2px solid #78350f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: grab;
+      z-index: 5;
+      touch-action: none;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .control-item label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .control-item input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    footer {
+      max-width: 1120px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1rem;
+    }
+
+    .footer-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .footer-card h3 { font-size: 1.05rem; color: var(--primary-dark); margin-bottom: 0.75rem; }
+
+    .contact-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.85rem;
+      font-size: 0.92rem;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-note { color: var(--muted); font-size: 0.85rem; }
+  </style>
 </head>
-
 <body>
-
-<header>
-  <h1>🔬 مختبر الفيزياء التفاعلي</h1>
-  <p>تعلم الفيزياء بطريقة ممتعة وسهلة</p>
-</header>
-
-<div class="container">
-
-  <div class="hero">
-    <h1>أهلاً بك في مختبر الفيزياء</h1>
-    <p>اختر القسم الذي تريد استكشافه</p>
-  </div>
-
-  <div class="cards">
-
-    <div class="card">
-      <div class="icon">🧪</div>
-      <h2>التجارب المنهجية</h2>
-      <p>تجارب الفيزياء المدرسية مع شرح مبسط</p>
-      <a href="#">استكشف القسم</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home" data-tab="home">مكتبتي التعليمية</a>
+      <nav id="tabs">
+        <button type="button" class="active" data-tab="home">الرئيسية</button>
+        <button type="button" data-tab="grades">الصفوف الدراسية</button>
+        <button type="button" class="active" data-tab="examples">المسائل الفيزيائية</button>
+        <button type="button" data-tab="free-lab">المختبر الحر</button>
+        <button type="button" data-tab="formulas">القوانين</button>
+      </nav>
     </div>
+  </header>
 
-    <div class="card">
-      <div class="icon">📐</div>
-      <h2>الأمثلة المحلولة</h2>
-      <p>حل المسائل الفيزيائية خطوة بخطوة</p>
-      <a href="#">استكشف القسم</a>
+  <section class="hero">
+    <div class="hero-box">
+      <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
+      <p>الكتب الدراسية، عدد الفصول، الأنشطة، المسائل الفيزيائية، والتجارب العملية من الأول المتوسط إلى السادس الإعدادي.</p>
     </div>
+  </section>
 
-    <div class="card">
-      <div class="icon">🗺️</div>
-      <h2>خرائط الفصول</h2>
-      <p>ملخصات ومخططات للفصول الدراسية</p>
-      <a href="#">استكشف القسم</a>
+  <main>
+    <section id="home" class="panel active">
+      <div class="section-head">
+        <h2>اختر الصف الدراسي</h2>
+      </div>
+      <div class="grades-bar" id="homeGradesGrid">
+        <button type="button" class="grade-btn" data-open-grade="g1m">الصف الأول المتوسط (6 فصول)</button>
+        <button type="button" class="grade-btn" data-open-grade="g2m">الصف الثاني المتوسط (6 فصول)</button>
+        <button type="button" class="grade-btn" data-open-grade="g3m">الصف الثالث المتوسط (9 فصول)</button>
+        <button type="button" class="grade-btn" data-open-grade="g4s">الصف الرابع العلمي (9 فصول)</button>
+        <button type="button" class="grade-btn" data-open-grade="g5s">الصف الخامس العلمي (9 فصول)</button>
+        <button type="button" class="grade-btn" data-open-grade="g6s">الصف السادس العلمي (8 فصول)</button>
+      </div>
+    </section>
+
+    <section id="grades" class="panel">
+      <div class="section-head">
+        <h2>الصفوف الدراسية (الأول المتوسط — السادس الإعدادي)</h2>
+      </div>
+
+      <div class="grades-bar" id="gradesTabsBar">
+        <button type="button" class="grade-btn active" data-grade="g1m">الصف الأول المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g2m">الصف الثاني المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g3m">الصف الثالث المتوسط</button>
+        <button type="button" class="grade-btn" data-grade="g4s">الصف الرابع العلمي</button>
+        <button type="button" class="grade-btn" data-grade="g5s">الصف الخامس العلمي</button>
+        <button type="button" class="grade-btn" data-grade="g6s">الصف السادس العلمي</button>
+      </div>
+
+      <div class="grade-workspace">
+        <div class="grade-header">
+          <h3 id="selectedGradeTitle">الصف الأول المتوسط</h3>
+          <div>
+            <span class="tag teal" id="selectedGradeStage">المرحلة المتوسطة</span>
+            <span class="tag" id="selectedGradeChaptersCount">عدد الفصول: 6</span>
+          </div>
+        </div>
+
+        <div class="subtabs" id="gradeSubtabs">
+          <button type="button" class="subtab-btn active" data-sub="book">الكتاب والفصول</button>
+          <button type="button" class="subtab-btn" data-sub="activities">الأنشطة</button>
+          <button type="button" class="subtab-btn" data-sub="experiments">التجارب العملية</button>
+        </div>
+
+        <div id="gradeContentArea"></div>
+      </div>
+    </section>
+
+    <section id="examples" class="panel">
+      <div class="section-head">
+        <h2>المسائل الفيزيائية المحلولة</h2>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">حركة خطية</span>
+          <h3>مسألة 1: حساب السرعة النهائية</h3>
+          <p><strong>المسألة:</strong> جسم يبدأ حركته من السكون ($v_0 = 0$) بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$. احسب سرعته النهائية.</p>
+          <p><strong>الحل:</strong> $v = 0 + 3 \times 4 = 12\,\text{m/s}$.</p>
+          <div class="formula-box">$$v = v_0 + a t$$</div>
+        </article>
+        <article class="card">
+          <span class="tag teal">كهرباء</span>
+          <h3>مسألة 2: حساب المقاومة الكهربائية</h3>
+          <p><strong>المسألة:</strong> موصل يمر فيه تيار شدته $I = 2\,\text{A}$ عندما يكون فرق الجهد بين طرفيه $V = 12\,\text{V}$. احسب مقاومته.</p>
+          <p><strong>الحل:</strong> $R = \frac{12}{2} = 6\,\Omega$.</p>
+          <div class="formula-box">$$R = \frac{V}{I}$$</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="free-lab" class="panel">
+      <div class="section-head">
+        <h2>المختبر الحر — محاكاة البندول</h2>
+      </div>
+      <div class="sim-box">
+        <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
+        <div class="controls">
+          <div class="control-item">
+            <label for="lengthRange">طول الخيط $L$: <span id="lengthVal">1.0</span> m</label>
+            <input id="lengthRange" type="range" min="0.2" max="3.0" step="0.1" value="1.0" />
+          </div>
+        </div>
+        <div class="result-strip" id="periodResult">الزمن الدوري التقريبي: 2.01 ثانية</div>
+      </div>
+    </section>
+
+    <section id="formulas" class="panel">
+      <div class="section-head">
+        <h2>القوانين الفيزيائية</h2>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">طاقة</span>
+          <h3>الطاقة الحركية</h3>
+          <div class="formula-box">$$K = \frac{1}{2} m v^2$$</div>
+        </article>
+        <article class="card">
+          <span class="tag teal">موجات</span>
+          <h3>سرعة انتشار الموجة</h3>
+          <div class="formula-box">$$v = \lambda f$$</div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-card">
+      <h3>إشراف وتواصل — مكتبتي التعليمية</h3>
+      <div class="contact-list">
+        <span class="contact-item">الأستاذ امير الخاقاني</span>
+        <a class="contact-item" href="tel:07818761812" dir="ltr">07818761812</a>
+        <a class="contact-item" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">@Taech_ameer</a>
+      </div>
+      <p class="footer-note">مكتبتي التعليمية — مختبر الفيزياء</p>
     </div>
+  </footer>
 
-    <div class="card">
-      <div class="icon">⚛️</div>
-      <h2>المختبر الحر</h2>
-      <p>اكتشف المفاهيم الفيزيائية التفاعلية</p>
-      <a href="#">استكشف القسم</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📘</div>
-      <h2>القوانين الفيزيائية</h2>
-      <p>أهم القوانين والمعادلات الفيزيائية</p>
-      <a href="#">استكشف القسم</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">🎓</div>
-      <h2>المكتبة التعليمية</h2>
-      <p>كتب وملخصات وأسئلة للطلاب</p>
-      <a href="#">استكشف القسم</a>
-    </div>
-
-  </div>
-
-  <!-- معلومات التواصل -->
-  <div class="contact">
-    <h2>📞 تواصل مع الأستاذ</h2>
-
-    <h3>الأستاذ أمير الخاقاني</h3>
-
-    <p>رقم الهاتف: 07818761812</p>
-    <p>معرّف التليكرام: @Taech_ameer</p>
-
-    <div class="contact-buttons">
-      <a href="tel:07818761812">📱 اتصل بي</a>
-
-      <a href="https://t.me/Taech_ameer"
-         target="_blank"
-         rel="noopener">
-        ✈️ تواصل عبر التليكرام
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<footer>
-  جميع الحقوق محفوظة © مختبر الفيزياء التفاعلي
-  <br>
-  الأستاذ أمير الخاقاني
-</footer>
-
-</body>
-</html>
+  <script>
+    (function () {
+      const gradesData = {
+        g1m: {
+          name: "الصف الأول المتوسط",
+          stage: "المرحلة المتوسطة",
+          chaptersCount: 6,
+          bookTitle: "كتاب الفيزياء — الأول المتوسط",
+          chapters: [
+            "الفصل الأول: خواص المادة",
+            "الفصل الثاني: القوة",
+            "الفصل الثالث: الضغط",
+            "الفصل الرابع: الحرارة",
+            "الفصل الخامس: أثر الحرارة في المواد",
+            "الفصل السادس: موضوعات المنهج المقررة"
+          ],
+          activities: [
+            {
+              tag: "خواص المادة",
+              title: "قياس حجم جسم صلب غير منتظم بالإزاحة",
+              steps: "نضع ماءً في مخبار مدرج، نسجل قراءته، ثم نغمر الجسم الصلب ونطرح القراءتين.",
+              conclusion: "حجم الجسم يساوي حجم الماء المزاح."
+            },
+            {
+              tag: "الحرارة",
+              title: "تأثير التسخين في تمدد الأجسام",
+              steps: "نختبر مرور كرة معدنية في حلقة قبل التسخين وبعده.",
+              conclusion: "تتمدد المواد بالحرارة وتزداد أبعادها."
+            }
+          ],
+          experiments: [
+            {
+              tag: "الفصل الأول — تجربة تفاعلية باليد",
+              title: "الإزاحة والكثافة في المخبار المدرج",
+              desc: "اسحب المكعب باللمس أو الماوس إلى داخل الماء لمشاهدة ارتفاع مستوى الماء وحساب الحجم المزاح.",
+              formula: "$$\\rho = \\frac{m}{V}$$",
+              interactiveDrag: true
+            },
+            {
+              tag: "الفصل الثالث — الضغط",
+              title: "ضغط السوائل مع العمق",
+              desc: "يزداد ضغط السائل بزيادة عمقه تحت السطح الحر للسائل.",
+              formula: "$$P = \\rho g h$$"
+            },
+            {
+              tag: "الفصل الرابع — الحرارة",
+              title: "العلاقة بين الحرارة والتغير في درجة الحرارة",
+              desc: "تعتمد كمية الحرارة المكتسبة أو المفقودة على كتلة المادة وحرارتها النوعية والتغير في درجة حرارتها.",
+              formula: "$$Q = c \\cdot m \\cdot \\Delta T$$"
+            }
+          ]
+        },
+        g2m: {
+          name: "الصف الثاني المتوسط",
+          stage: "المرحلة المتوسطة",
+          chaptersCount: 6,
+          bookTitle: "كتاب الفيزياء — الثاني المتوسط",
+          chapters: [
+            "الفصل الأول: الحركة",
+            "الفصل الثاني: قوانين الحركة",
+            "الفصل الثالث: الشغل والقدرة والطاقة",
+            "الفصل الرابع: الآلات البسيطة",
+            "الفصل الخامس: الحركة الموجية والصوت",
+            "الفصل السادس: الضوء"
+          ],
+          activities: [
+            {
+              tag: "الحركة",
+              title: "تمثيل الحركة بيانياً",
+              steps: "نسجل المسافة والزمن ونرسم العلاقة البيانية بينهما.",
+              conclusion: "الميل المنتظم يمثل سرعة ثابتة."
+            }
+          ],
+          experiments: [
+            {
+              tag: "الفصل الأول — السرعة",
+              title: "حساب السرعة المتوسطة",
+              desc: "النسبة بين المسافة الكلية والزمن الكلي المستغرق.",
+              formula: "$$v = \\frac{d}{t}$$"
+            },
+            {
+              tag: "الفصل الثاني — القوة",
+              title: "قانون نيوتن الثاني",
+              desc: "تتناسب محصلة القوى المؤثرة في جسم طردياً مع تعجيله بثبوت الكتلة.",
+              formula: "$$F = m \\cdot a$$"
+            },
+            {
+              tag: "الفصل الثالث — الشغل",
+              title: "حساب الشغل الميكانيكي",
+              desc: "الشغل يساوي حاصل ضرب القوة في الإزاحة باتجاهها.",
+              formula: "$$W = F \\cdot d$$"
+            },
+            {
+              tag: "الفصل الخامس — الموجات",
+              title: "سرعة انتشار الموجة",
+              desc: "تساوي حاصل ضرب الطول الموجي في تردد الموجة.",
+              formula: "$$v = \\lambda \\cdot f$$"
+            }
+          ]
+        },
+        g3m: {
+          name: "الصف الثالث المتوسط",
+          stage: "المرحلة المتوسطة",
+          chaptersCount: 9,
+          bookTitle: "كتاب الفيزياء — الثالث المتوسط",
+          chapters: [
+            "الفصل الأول: الكهربائية الساكنة",
+            "الفصل الثاني: المغناطيسية",
+            "الفصل الثالث: التيار الكهربائي",
+            "الفصل الرابع: البطارية والقوة الدافعة الكهربائية",
+            "الفصل الخامس: الطاقة والقدرة الكهربائية",
+            "الفصل السادس: الكهربائية والمغناطيسية",
+            "الفصل السابع: المحولة الكهربائية",
+            "الفصل الثامن: تكنولوجيا مصادر الطاقة",
+            "الفصل التاسع: فيزياء الجو وتقنية الاتصالات الحديثة"
+          ],
+          activities: [
+            {
+              tag: "الكهربائية الساكنة",
+              title: "الكشاف الكهربائي",
+              steps: "تقريب جسم مشحون من قرص الكشاف وملاحظة انفراج الورقتين.",
+              conclusion: "انفراج الورقتين يدل على وجود شحنة كهربائية."
+            }
+          ],
+          experiments: [
+            {
+              tag: "الفصل الثالث — قانون أوم",
+              title: "العلاقة بين فرق الجهد والتيار",
+              desc: "المقاومة تساوي ناتج قسمة فرق الجهد على التيار الكهربائي.",
+              formula: "$$R = \\frac{V}{I}$$"
+            },
+           
