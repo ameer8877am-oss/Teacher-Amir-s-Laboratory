@@ -62,7 +62,7 @@
     }
 
     .topbar {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
       position: sticky;
@@ -71,7 +71,7 @@
     }
 
     .topbar-inner {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 0.8rem 1rem;
       display: flex;
@@ -137,7 +137,7 @@
     }
 
     .hero {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 1.5rem auto 0;
       padding: 0 1rem;
     }
@@ -148,8 +148,6 @@
       border-radius: var(--radius-lg);
       padding: 2rem 1.6rem;
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
-      position: relative;
-      overflow: hidden;
     }
 
     .hero-kicker {
@@ -168,17 +166,16 @@
     .hero-box h1 {
       font-size: 1.68rem;
       margin-bottom: 0.55rem;
-      letter-spacing: -0.01em;
     }
 
     .hero-box p {
       color: rgba(255, 255, 255, 0.9);
-      max-width: 740px;
+      max-width: 760px;
       font-size: 0.97rem;
     }
 
     main {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 1.6rem auto 2rem;
       padding: 0 1rem;
     }
@@ -200,13 +197,106 @@
     .section-head {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       margin-bottom: 1.05rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
     }
 
     .section-head h2 {
       font-size: 1.28rem;
       color: var(--ink);
+    }
+
+    .grades-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .grade-btn {
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 0.85rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .grade-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .grade-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(29, 78, 216, 0.2);
+    }
+
+    .grade-workspace {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.3rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    .grade-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1.1rem;
+    }
+
+    .grade-header h3 {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+
+    .subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .subtab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .subtab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
     }
 
     .grid {
@@ -221,13 +311,10 @@
       border-radius: var(--radius-md);
       padding: 1.2rem;
       box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #93c5fd;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+    .grade-workspace .card {
+      background: var(--surface-alt);
     }
 
     .card-top {
@@ -259,7 +346,7 @@
       width: 34px;
       height: 34px;
       border-radius: 10px;
-      background: var(--surface-alt);
+      background: var(--surface);
       border: 1px solid var(--line);
       color: var(--primary);
       display: inline-flex;
@@ -267,8 +354,8 @@
       justify-content: center;
     }
 
-    .card h3 {
-      font-size: 1.06rem;
+    .card h4, .card h3 {
+      font-size: 1.05rem;
       margin-bottom: 0.4rem;
       color: var(--ink);
     }
@@ -278,8 +365,28 @@
       font-size: 0.92rem;
     }
 
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      background: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.48rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .btn-link.secondary {
+      background: var(--surface);
+      color: var(--primary-dark);
+      border: 1px solid var(--line);
+    }
+
     .formula-box {
-      background: var(--surface-alt);
+      background: var(--surface);
       border: 1px solid var(--line);
       border-right: 4px solid var(--primary);
       border-radius: var(--radius-sm);
@@ -295,7 +402,6 @@
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
       padding: 1.35rem;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
 
     .controls {
@@ -333,7 +439,7 @@
     }
 
     footer {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 0 auto 2.5rem;
       padding: 0 1rem;
     }
@@ -406,30 +512,11 @@
       </a>
 
       <nav id="tabs">
-        <button class="active" data-tab="home" onclick="showTab('home')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
-          <span>الرئيسية</span>
-        </button>
-        <button data-tab="curriculum" onclick="showTab('curriculum')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
-          <span>تجارب المنهج</span>
-        </button>
-        <button data-tab="examples" onclick="showTab('examples')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-          <span>الأمثلة المحلولة</span>
-        </button>
-        <button data-tab="maps" onclick="showTab('maps')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
-          <span>خرائط الفصول</span>
-        </button>
-        <button data-tab="free-lab" onclick="showTab('free-lab')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
-          <span>المختبر الحر</span>
-        </button>
-        <button data-tab="formulas" onclick="showTab('formulas')">
-          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
-          <span>القوانين</span>
-        </button>
+        <button class="active" data-tab="home" onclick="showTab('home')">الرئيسية</button>
+        <button data-tab="grades" onclick="showTab('grades')">الصفوف الدراسية</button>
+        <button data-tab="examples" onclick="showTab('examples')">الأمثلة المحلولة</button>
+        <button data-tab="free-lab" onclick="showTab('free-lab')">المختبر الحر</button>
+        <button data-tab="formulas" onclick="showTab('formulas')">القوانين</button>
       </nav>
     </div>
   </header>
@@ -438,111 +525,108 @@
     <div class="hero-box">
       <div class="hero-kicker">
         <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-        <span>منصة فيزيائية تفاعلية</span>
+        <span>من الأول المتوسط إلى السادس الإعدادي</span>
       </div>
       <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
-      <p>منصة تعليمية لتنظيم التجارب الفيزيائية، الأمثلة المحلولة، خرائط الفصول، المحاكاة الحرة، والقوانين الأساسية.</p>
+      <p>اختر صفك الدراسي لعرض كتاب الفيزياء، الأنشطة، التجارب العملية، وخرائط الفصول بشكل منظم.</p>
     </div>
   </section>
 
   <main>
     <section id="home" class="panel active">
       <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
-        <h2>نظرة عامة على الأقسام</h2>
+        <div class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <h2>اختر الصف الدراسي للبدء</h2>
+        </div>
       </div>
+
+      <div class="grades-bar" id="homeGradesGrid"></div>
+
       <div class="grid">
         <div class="card">
           <div class="card-top">
-            <span class="tag">عملي</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
-            </span>
-          </div>
-          <h3>تجارب المنهج</h3>
-          <p>تجارب عملية منظمة مع الأدوات والخطوات والعلاقات الرياضية.</p>
-        </div>
-
-        <div class="card">
-          <div class="card-top">
-            <span class="tag teal">تطبيق</span>
+            <span class="tag">الكتاب</span>
             <span class="card-icon">
               <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             </span>
           </div>
-          <h3>الأمثلة المحلولة</h3>
-          <p>مسائل فيزيائية مشروحة خطوة بخطوة لتوضيح طريقة الحل.</p>
+          <h3>كتاب الفيزياء</h3>
+          <p>الوصول السريع إلى كتاب كل صف وفصوله الدراسية المعتمدة.</p>
         </div>
 
         <div class="card">
           <div class="card-top">
-            <span class="tag">تنظيم</span>
+            <span class="tag teal">أنشطة</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+            </span>
+          </div>
+          <h3>الأنشطة الفيزيائية</h3>
+          <p>استعراض الأنشطة الصفية والمنزلية المرتبطة بمفاهيم كل فصل.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <span class="tag">مختبر</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
+            </span>
+          </div>
+          <h3>التجارب العملية</h3>
+          <p>خطوات التجارب العملية والأدوات والعلاقات الرياضية لكل صف.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <span class="tag teal">خرائط</span>
             <span class="card-icon">
               <svg class="icon" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
             </span>
           </div>
-          <h3>خرائط الفصول</h3>
-          <p>ملخصات بصرية تربط مفاهيم كل فصل ببعضها بوضوح.</p>
-        </div>
-
-        <div class="card">
-          <div class="card-top">
-            <span class="tag teal">استكشاف</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
-            </span>
-          </div>
-          <h3>المختبر الحر والقوانين</h3>
-          <p>تجربة تغيير المتغيرات ومراجعة القوانين الفيزيائية الأساسية.</p>
+          <h3>خرائط الكتاب</h3>
+          <p>تسلسل بصري واضح يربط مواضيع الفصول والمفاهيم الأساسية.</p>
         </div>
       </div>
     </section>
 
-    <section id="curriculum" class="panel">
+    <section id="grades" class="panel">
       <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
-        <h2>تجارب المنهج</h2>
+        <div class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+          <h2>الصفوف الدراسية (الأول المتوسط — السادس الإعدادي)</h2>
+        </div>
       </div>
-      <div class="grid">
-        <article class="card">
-          <div class="card-top">
-            <span class="tag">ميكانيك</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
-            </span>
-          </div>
-          <h3>البندول البسيط</h3>
-          <p>دراسة أثر طول الخيط على الزمن الدوري للتذبذبات الصغيرة.</p>
-          <div class="formula-box">$$T = 2\pi\sqrt{\frac{L}{g}}$$</div>
-        </article>
 
-        <article class="card">
-          <div class="card-top">
-            <span class="tag teal">كهرباء</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            </span>
-          </div>
-          <h3>قانون أوم</h3>
-          <p>العلاقة بين فرق الجهد الكهربائي وشدة التيار في موصل أومي.</p>
-          <div class="formula-box">$$V = I \cdot R$$</div>
-        </article>
+      <div class="grades-bar" id="gradesTabsBar"></div>
+
+      <div class="grade-workspace" id="gradeWorkspace">
+        <div class="grade-header">
+          <h3 id="selectedGradeTitle">الصف الأول المتوسط</h3>
+          <span class="tag teal" id="selectedGradeBadge">المرحلة المتوسطة</span>
+        </div>
+
+        <div class="subtabs" id="gradeSubtabs">
+          <button class="subtab-btn active" data-sub="book" onclick="showSubtab('book')">كتاب الفيزياء</button>
+          <button class="subtab-btn" data-sub="activities" onclick="showSubtab('activities')">الأنشطة الفيزيائية</button>
+          <button class="subtab-btn" data-sub="experiments" onclick="showSubtab('experiments')">التجارب العملية</button>
+          <button class="subtab-btn" data-sub="maps" onclick="showSubtab('maps')">خرائط الكتاب</button>
+        </div>
+
+        <div id="gradeContentArea"></div>
       </div>
     </section>
 
     <section id="examples" class="panel">
       <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <h2>الأمثلة المحلولة</h2>
+        <div class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <h2>الأمثلة المحلولة</h2>
+        </div>
       </div>
       <div class="grid">
         <article class="card">
-          <div class="card-top">
-            <span class="tag">حركة</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </span>
-          </div>
+          <span class="tag">حركة</span>
           <h3>حساب السرعة النهائية</h3>
           <p>جسم يبدأ من السكون بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$، فإن سرعته تصبح $v = 12\,\text{m/s}$.</p>
           <div class="formula-box">$$v = v_0 + a t$$</div>
@@ -550,49 +634,18 @@
       </div>
     </section>
 
-    <section id="maps" class="panel">
-      <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
-        <h2>خرائط الفصول</h2>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <div class="card-top">
-            <span class="tag">الفصل الأول</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
-            </span>
-          </div>
-          <h3>القياس والحركة</h3>
-          <p>الوحدات الدولية $\rightarrow$ المتجهات $\rightarrow$ الإزاحة والسرعة $\rightarrow$ التسارع المنتظم.</p>
-        </article>
-
-        <article class="card">
-          <div class="card-top">
-            <span class="tag teal">الفصل الثاني</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-            </span>
-          </div>
-          <h3>القوى وقوانين نيوتن</h3>
-          <p>القصور الذاتي $\rightarrow$ محصلة القوى $\rightarrow$ الفعل ورد الفعل.</p>
-        </article>
-      </div>
-    </section>
-
     <section id="free-lab" class="panel">
       <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
-        <h2>المختبر الحر — محاكاة البندول</h2>
+        <div class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
+          <h2>المختبر الحر — محاكاة البندول</h2>
+        </div>
       </div>
       <div class="sim-box">
         <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
         <div class="controls">
           <div class="control-item">
-            <label for="lengthRange">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="21" y1="6" x2="3" y2="6"></line><line x1="10" y1="12" x2="3" y2="12"></line><line x1="15" y1="18" x2="3" y2="18"></line></svg>
-              <span>طول الخيط $L$: <span id="lengthVal">1.0</span> m</span>
-            </label>
+            <label for="lengthRange">طول الخيط $L$: <span id="lengthVal">1.0</span> m</label>
             <input id="lengthRange" type="range" min="0.2" max="3.0" step="0.1" value="1.0" oninput="updatePendulum()" />
           </div>
         </div>
@@ -605,31 +658,19 @@
 
     <section id="formulas" class="panel">
       <div class="section-head">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
-        <h2>القوانين الفيزيائية</h2>
+        <div class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
+          <h2>القوانين الفيزيائية</h2>
+        </div>
       </div>
       <div class="grid">
         <article class="card">
-          <div class="card-top">
-            <span class="tag">طاقة</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            </span>
-          </div>
+          <span class="tag">طاقة</span>
           <h3>الطاقة الحركية</h3>
           <div class="formula-box">$$K = \frac{1}{2} m v^2$$</div>
         </article>
-
         <article class="card">
-          <div class="card-top">
-            <span class="tag teal">موجات</span>
-            <span class="card-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12c2.5-4 5-4 7.5 0s5 4 7.5 0 5-4 7.5 0"></path></svg>
-            </span>
-          </div>
-          <h3>سرعة انتشار الموجة</h3>
-          <div "card">
-          <span class="tag">موجات</span>
+          <span class="tag teal">موجات</span>
           <h3>سرعة انتشار الموجة</h3>
           <div class="formula-box">$$v = \lambda f$$</div>
         </article>
@@ -639,17 +680,287 @@
 
   <footer>
     <div class="footer-card">
-      <h3>إشراف وتواصل — مكتبتي التعليمية</h3>
+      <h3>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>إشراف وتواصل — مكتبتي التعليمية</span>
+      </h3>
       <div class="contact-list">
-        <span class="contact-item">الأستاذ امير الخاقاني</span>
-        <a class="contact-item" href="tel:07818761812" dir="ltr">📞 07818761812</a>
-        <a class="contact-item" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">✈️ @Taech_ameer</a>
+        <span class="contact-item">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>الأستاذ امير الخاقاني</span>
+        </span>
+        <a class="contact-item" href="tel:07818761812" dir="ltr">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.81.32 1.6.59 2.36a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.76.27 1.55.47 2.36.59A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>07818761812</span>
+        </a>
+        <a class="contact-item" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <span>@Taech_ameer</span>
+        </a>
       </div>
       <p class="footer-note">مكتبتي التعليمية — مختبر الفيزياء</p>
     </div>
   </footer>
 
   <script>
+    const gradesData = {
+      g1m: {
+        name: "الصف الأول المتوسط",
+        stage: "المرحلة المتوسطة",
+        book: {
+          title: "كتاب الفيزياء — الأول المتوسط",
+          desc: "مقرر الفيزياء للصف الأول المتوسط: خصائص المادة، حالات المادة، الحرارة، والضغط.",
+          pdfUrl: "#book-1m"
+        },
+        activities: [
+          { tag: "المادة", title: "قياس حجم جسم صلب غير منتظم", desc: "نشاط الإزاحة باستخدام المخبار المدرج والماء لملاحظة ارتفاع مستوى السائل." },
+          { tag: "الحرارة", title: "تأثير التسخين في تمدد الأجسام", desc: "نشاط يوضح تغير أبعاد المواد عند اكتساب الطاقة الحرارية." }
+        ],
+        experiments: [
+          { tag: "كثافة", title: "تعيين كثافة مادة صلبة", desc: "قياس الكتلة بالميزان والحجم بالإزاحة وحساب الكثافة.", formula: "$$\\rho = \\frac{m}{V}$$" },
+          { tag: "ضغط", title: "دراسة ضغط السوائل", desc: "ملاحظة ازدياد الضغط بزيادة عمق السائل.", formula: "$$P = \\rho g h$$" }
+        ],
+        maps: [
+          { tag: "خريطة الفصل 1–2", title: "المادة وحالاتها", desc: "المادة ← الكثافة والحجم ← الحالة الصلبة والسائلة والغازية." },
+          { tag: "خريطة الفصل 3–4", title: "الحرارة والضغط", desc: "درجة الحرارة ← التمدد الحراري ← الضغط في الموائع." }
+        ]
+      },
+      g2m: {
+        name: "الصف الثاني المتوسط",
+        stage: "المرحلة المتوسطة",
+        book: {
+          title: "كتاب الفيزياء — الثاني المتوسط",
+          desc: "مقرر الفيزياء للصف الثاني المتوسط: الحركة، القوة، الشغل والطاقة، والآلات البسيطة.",
+          pdfUrl: "#book-2m"
+        },
+        activities: [
+          { tag: "الحركة", title: "تمثيل الحركة بيانياً", desc: "نشاط لرسم العلاقة بين الإزاحة والزمن لحركة جسم منتظم." },
+          { tag: "القوة", title: "قياس القوة بالميزان النابضي", desc: "نشاط يوضح استطالة النابض بتغير مقدار القوة المؤثرة." }
+        ],
+        experiments: [
+          { tag: "سرعة", title: "حساب السرعة المتوسطة", desc: "قياس المسافة والزمن لجسم متحرك واستنتاج سرعته.", formula: "$$v = \\frac{d}{t}$$" },
+          { tag: "شغل", title: "حساب الشغل الميكانيكي", desc: "دراسة أثر القوة والإزاحة في إنجاز الشغل.", formula: "$$W = F \\cdot d$$" }
+        ],
+        maps: [
+          { tag: "خريطة الحركة", title: "وصف الحركة والقوى", desc: "الموقع والإزاحة ← السرعة والتعجيل ← أنواع القوى." },
+          { tag: "خريطة الطاقة", title: "الشغل والآلات البسيطة", desc: "القوة ← الشغل والطاقة ← العتلات والسطح المائل." }
+        ]
+      },
+      g3m: {
+        name: "الصف الثالث المتوسط",
+        stage: "المرحلة المتوسطة",
+        book: {
+          title: "كتاب الفيزياء — الثالث المتوسط",
+          desc: "مقرر الفيزياء للصف الثالث المتوسط: الكهربائية الساكنة، التيار الكهربائي، المغناطيسية، والحث.",
+          pdfUrl: "#book-3m"
+        },
+        activities: [
+          { tag: "كهربائية ساكنة", title: "الكشاف الكهربائي", desc: "نشاط للكشف عن وجود شحنة كهربائية ونوعها على جسم." },
+          { tag: "مغناطيسية", title: "رسم خطوط المجال المغناطيسي", desc: "نشاط برادة الحديد لإظهار شكل المجال حول مغناطيس." }
+        ],
+        experiments: [
+          { tag: "قانون أوم", title: "العلاقة بين فرق الجهد والتيار", desc: "ربط دائرة كهربائية وقياس الفولتية والتيار والمقاومة.", formula: "$$R = \\frac{V}{I}$$" },
+          { tag: "قدرة", title: "حساب القدرة الكهربائية", desc: "دراسة استهلاك الطاقة الكهربائية في الأجهزة.", formula: "$$P = I \\cdot V$$" }
+        ],
+        maps: [
+          { tag: "خريطة الكهرباء", title: "الشحنات والدوائر", desc: "الشحنة ← التيار الكهربائي ← الربط على التوالي والتوازي." },
+          { tag: "خريطة المغناطيس", title: "المغناطيسية والحث", desc: "المجال المغناطيسي ← المغناطيس الكهربائي ← الحث الكهرومغناطيسي." }
+        ]
+      },
+      g4s: {
+        name: "الصف الرابع العلمي",
+        stage: "المرحلة الإعدادية",
+        book: {
+          title: "كتاب الفيزياء — الرابع العلمي",
+          desc: "مقرر الفيزياء للصف الرابع العلمي: المتجهات، الحركة الخطية، قوانين نيوتن، الشغل والقدرة، والموائع.",
+          pdfUrl: "#book-4s"
+        },
+        activities: [
+          { tag: "متجهات", title: "تحليل وجمع المتجهات", desc: "نشاط عملي لإيجاد محصلة متجهين بزاوية معلومة." },
+          { tag: "موائع", title: "مبدأ أرخميدس وقوة الطفو", desc: "نشاط لمقارنة وزن الجسم المغمور بقوة الطفو المؤثرة فيه." }
+        ],
+        experiments: [
+          { tag: "نيوتن الثاني", title: "القوة والتعجيل والكتلة", desc: "دراسة تغير التعجيل بتغير القوة المؤثرة أو الكتلة.", formula: "$$\\sum F = m a$$" },
+          { tag: "طاقة حركية", title: "مبرهنة الشغل والطاقة", desc: "ربط الشغل المنجز بالتغير في الطاقة الحركية.", formula: "$$W = \\Delta K$$" }
+        ],
+        maps: [
+          { tag: "خريطة الميكانيك", title: "الحركة وقوانين نيوتن", desc: "المتجهات ← معادلات الحركة ← القصور والتعجيل والاحتكاك." },
+          { tag: "خريطة الموائع", title: "ميكانيك الموائع والحرارة", desc: "الضغط ← الطفو وجريان الموائع ← قوانين الغازات." }
+        ]
+      },
+      g5s: {
+        name: "الصف الخامس العلمي",
+        stage: "المرحلة الإعدادية",
+        book: {
+          title: "كتاب الفيزياء — الخامس العلمي",
+          desc: "مقرر الفيزياء للصف الخامس العلمي: الحركة الدائرية والدورانية، الثرموديناميك، الموجات والصوت، والبصريات.",
+          pdfUrl: "#book-5s"
+        },
+        activities: [
+          { tag: "موجات", title: "توليد الموجات المستعرضة والطولية", desc: "نشاط نابض الموجات لتوضيح القمة والقاع والتضاغط والتخلخل." },
+          { tag: "بصريات", title: "انكسار الضوء والعدسات", desc: "نشاط تتبع مسار الأشعة الضوئية عبر عدسة محدبة." }
+        ],
+        experiments: [
+          { tag: "حركة دائرية", title: "القوة المركزية والتعجيل المركزي", desc: "دراسة حركة جسم في مسار دائري منتظم.", formula: "$$a_c = \\frac{v^2}{r}$$" },
+          { tag: "ثرموديناميك", title: "القانون الأول للثرموديناميك", desc: "العلاقة بين الحرارة الداخلة والتغير في الطاقة الداخلية والشغل.", formula: "$$Q = \\Delta U + W$$" }
+        ],
+        maps: [
+          { tag: "خريطة الدورانية", title: "الحركة الدائرية والدورانية", desc: "التعجيل المركزي ← العزم والقصور الذاتي ← الزخم الزاوي." },
+          { tag: "خريطة الموجات", title: "الحرارة والموجات والضوء", desc: "الثرموديناميك ← الموجات والصوت ← التداخل والعدسات." }
+        ]
+      },
+      g6s: {
+        name: "الصف السادس العلمي",
+        stage: "المرحلة الإعدادية",
+        book: {
+          title: "كتاب الفيزياء — السادس العلمي",
+          desc: "مقرر الفيزياء للصف السادس العلمي: المتسعات، الحث الكهرومغناطيسي، التيار المتناوب، البصريات الفيزيائية، والفيزياء الحديثة.",
+          pdfUrl: "#book-6s"
+        },
+        activities: [
+          { tag: "متسعات", title: "شحن وتفريغ متسعة", desc: "نشاط عملي يوضح سلوك التيار والجهد أثناء شحن المتسعة." },
+          { tag: "بصريات فيزيائية", title: "تجربة شقي يونغ", desc: "نشاط يوضح تداخل الضوء وتكوّن الأهداب المضيئة والمظلمة." }
+        ],
+        experiments: [
+          { tag: "حث كهرومغناطيسي", title: "ظاهرة الحث الذاتي والمتبادل", desc: "دراسة تولد القوة الدافعة الكهربائية المحتثة بتغير التيار.", formula: "$$\\varepsilon_{ind} = -L \\frac{\\Delta I}{\\Delta t}$$" },
+          { tag: "تيار متناوب", title: "دائرة الرنين التوالي", desc: "تساوي الرادة السعوية والرادة الحثية عند التردد الرنيني.", formula: "$$X_L = X_C$$" }
+        ],
+        maps: [
+          { tag: "خريطة الكهرومغناطيسية", title: "المتسعات والحث والتيار المتناوب", desc: "المتسعات ← الحث الكهرومغناطيسي ← دوائر التيار المتناوب." },
+          { tag: "خريطة الحديثة", title: "البصريات والفيزياء الحديثة", desc: "التداخل والحيود ← الظاهرة الكهروضوئية ← النسبية والنووية." }
+        ]
+      }
+    };
+
+    let currentGradeKey = "g1m";
+    let currentSubtabKey = "book";
+
+    function renderGradesSelectors() {
+      const homeGrid = document.getElementById("homeGradesGrid");
+      const tabsBar = document.getElementById("gradesTabsBar");
+      homeGrid.innerHTML = "";
+      tabsBar.innerHTML = "";
+
+      Object.entries(gradesData).forEach(([key, item]) => {
+        const homeBtn = document.createElement("button");
+        homeBtn.className = "grade-btn";
+        homeBtn.textContent = item.name;
+        homeBtn.onclick = () => openGrade(key);
+        homeGrid.appendChild(homeBtn);
+
+        const tabBtn = document.createElement("button");
+        tabBtn.className = "grade-btn" + (key === currentGradeKey ? " active" : "");
+        tabBtn.dataset.grade = key;
+        tabBtn.textContent = item.name;
+        tabBtn.onclick = () => selectGrade(key);
+        tabsBar.appendChild(tabBtn);
+      });
+    }
+
+    function openGrade(gradeKey) {
+      showTab("grades");
+      selectGrade(gradeKey);
+    }
+
+    function selectGrade(gradeKey) {
+      currentGradeKey = gradeKey;
+      document.querySelectorAll("#gradesTabsBar .grade-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.grade === gradeKey);
+      });
+      const grade = gradesData[gradeKey];
+      document.getElementById("selectedGradeTitle").textContent = grade.name;
+      document.getElementById("selectedGradeBadge").textContent = grade.stage;
+      renderGradeContent();
+    }
+
+    function showSubtab(subKey) {
+      currentSubtabKey = subKey;
+      document.querySelectorAll("#gradeSubtabs .subtab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.sub === subKey);
+      });
+      renderGradeContent();
+    }
+
+    function renderGradeContent() {
+      const grade = gradesData[currentGradeKey];
+      const area = document.getElementById("gradeContentArea");
+
+      if (currentSubtabKey === "book") {
+        area.innerHTML = `
+          <div class="grid">
+            <article class="card">
+              <div class="card-top">
+                <span class="tag">كتاب المنهج</span>
+                <span class="card-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </span>
+              </div>
+              <h4>${grade.book.title}</h4>
+              <p>${grade.book.desc}</p>
+              <a class="btn-link" href="${grade.book.pdfUrl}">فتح / تحميل الكتاب</a>
+              <button class="btn-link secondary" style="border:1px solid var(--line);cursor:pointer;" onclick="showSubtab('activities')">استعراض الأنشطة</button>
+            </article>
+          </div>
+        `;
+      } else if (currentSubtabKey === "activities") {
+        area.innerHTML = `
+          <div class="grid">
+            ${grade.activities.map(act => `
+              <article class="card">
+                <div class="card-top">
+                  <span class="tag teal">${act.tag}</span>
+                  <span class="card-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+                  </span>
+                </div>
+                <h4>${act.title}</h4>
+                <p>${act.desc}</p>
+              </article>
+            `).join("")}
+          </div>
+        `;
+      } else if (currentSubtabKey === "experiments") {
+        area.innerHTML = `
+          <div class="grid">
+            ${grade.experiments.map(exp => `
+              <article class="card">
+                <div class="card-top">
+                  <span class="tag">${exp.tag}</span>
+                  <span class="card-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
+                  </span>
+                </div>
+                <h4>${exp.title}</h4>
+                <p>${exp.desc}</p>
+                ${exp.formula ? `<div class="formula-box">${exp.formula}</div>` : ""}
+              </article>
+            `).join("")}
+          </div>
+        `;
+      } else if (currentSubtabKey === "maps") {
+        area.innerHTML = `
+          <div class="grid">
+            ${grade.maps.map(mp => `
+              <article class="card">
+                <div class="card-top">
+                  <span class="tag teal">${mp.tag}</span>
+                  <span class="card-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+                  </span>
+                </div>
+                <h4>${mp.title}</h4>
+                <p>${mp.desc}</p>
+              </article>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
+    }
+
     function showTab(tabId) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('#tabs button').forEach(b => b.classList.remove('active'));
@@ -661,6 +972,7 @@
         window.MathJax.typesetPromise();
       }
     }
+
     function updatePendulum() {
       const L = parseFloat(document.getElementById('lengthRange').value);
       const g = 9.81;
@@ -669,6 +981,9 @@
       document.getElementById('periodResult').textContent =
         `الزمن الدوري التقريبي: ${T.toFixed(2)} ثانية`;
     }
+
+    renderGradesSelectors();
+    renderGradeContent();
   </script>
 </body>
 </html>
