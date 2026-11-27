@@ -12,222 +12,434 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
   <style>
     :root {
-      --bg: #f4f7fb;
+      --bg: #eef2f6;
       --surface: #ffffff;
-      --ink: #132238;
-      --muted: #52647a;
-      --primary: #0f766e;
-      --primary-soft: #ccfbf1;
-      --accent: #b45309;
-      --line: #dce5f0;
+      --surface-alt: #f8fafc;
+      --ink: #0f172a;
+      --muted: #475569;
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-soft: #dbeafe;
+      --accent: #0d9488;
+      --accent-soft: #ccfbf1;
+      --line: #cbd5e1;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.07), transparent 42%),
+        radial-gradient(circle at bottom left, rgba(13, 148, 136, 0.08), transparent 45%),
+        var(--bg);
       color: var(--ink);
-      line-height: 1.75;
+      line-height: 1.8;
+      min-height: 100vh;
     }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-sm {
+      width: 16px;
+      height: 16px;
+    }
+
     .topbar {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 30;
     }
+
     .topbar-inner {
-      max-width: 1040px;
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 0.75rem 1rem;
+      padding: 0.8rem 1rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.85rem;
     }
+
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
       font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--primary);
+      font-size: 1.08rem;
+      color: var(--primary-dark);
       text-decoration: none;
     }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     nav {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
+
     nav button {
-      background: transparent;
-      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
       color: var(--ink);
-      padding: 0.35rem 0.7rem;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-weight: 600;
+      padding: 0.42rem 0.78rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
+
     nav button:hover {
-      background: var(--bg);
-      border-color: var(--line);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
     }
+
     nav button.active {
-      background: var(--primary);
-      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(29, 78, 216, 0.22);
     }
+
     .hero {
-      max-width: 1040px;
+      max-width: 1080px;
       margin: 1.5rem auto 0;
       padding: 0 1rem;
     }
+
     .hero-box {
-      background: linear-gradient(135deg, #0f766e 0%, #164e63 100%);
-      color: #fff;
-      border-radius: 16px;
-      padding: 2rem 1.5rem;
+      background: linear-gradient(125deg, #0f172a 0%, #1e3a8a 58%, #0f766e 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.6rem;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+      position: relative;
+      overflow: hidden;
     }
-    .hero-box h1 { font-size: 1.7rem; margin-bottom: 0.5rem; }
-    .hero-box p { opacity: 0.92; max-width: 720px; font-size: 0.98rem; }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-box h1 {
+      font-size: 1.68rem;
+      margin-bottom: 0.55rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-box p {
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 740px;
+      font-size: 0.97rem;
+    }
+
     main {
-      max-width: 1040px;
-      margin: 1.5rem auto 2rem;
+      max-width: 1080px;
+      margin: 1.6rem auto 2rem;
       padding: 0 1rem;
     }
-    .panel { display: none; }
-    .panel.active { display: block; }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadeUp 0.25s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .section-head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
+      gap: 0.55rem;
+      margin-bottom: 1.05rem;
     }
+
     .section-head h2 {
-      font-size: 1.3rem;
+      font-size: 1.28rem;
       color: var(--ink);
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-      gap: 1rem;
+      gap: 1.05rem;
     }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 1.15rem;
-      box-shadow: 0 2px 8px rgba(19, 34, 56, 0.04);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #93c5fd;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
     .tag {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
       background: var(--primary-soft);
-      color: var(--primary);
+      color: var(--primary-dark);
       font-size: 0.78rem;
       font-weight: 700;
-      padding: 0.15rem 0.55rem;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
     }
-    .card h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-    .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.6rem; }
+
+    .tag.teal {
+      background: var(--accent-soft);
+      color: #115e59;
+    }
+
+    .card-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card h3 {
+      font-size: 1.06rem;
+      margin-bottom: 0.4rem;
+      color: var(--ink);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     .formula-box {
-      background: var(--bg);
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      padding: 0.6rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem;
       text-align: center;
       direction: ltr;
       overflow-x: auto;
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
     }
+
     .sim-box {
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
+
     .controls {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
-      margin: 1rem 0;
+      margin: 1.1rem 0;
     }
+
     .control-item label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
     }
+
     .control-item input[type="range"] {
       width: 100%;
       accent-color: var(--primary);
+      cursor: pointer;
     }
+
     .result-strip {
-      background: var(--primary-soft);
-      color: var(--primary);
-      padding: 0.85rem 1rem;
-      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--accent-soft);
+      color: #115e59;
+      border: 1px solid #99f6e4;
+      padding: 0.9rem 1.05rem;
+      border-radius: var(--radius-sm);
       font-weight: 700;
     }
+
     footer {
-      max-width: 1040px;
+      max-width: 1080px;
       margin: 0 auto 2.5rem;
       padding: 0 1rem;
     }
+
     .footer-card {
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
       text-align: center;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
+
     .footer-card h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.85rem;
     }
+
     .contact-list {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
+      gap: 0.7rem;
+      margin-bottom: 0.8rem;
     }
+
     .contact-item {
-      background: var(--bg);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      background: var(--surface-alt);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      padding: 0.48rem 0.9rem;
       font-size: 0.92rem;
       color: var(--ink);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
+      transition: all 0.2s ease;
     }
+
     .contact-item:hover {
       border-color: var(--primary);
       color: var(--primary);
+      background: var(--primary-soft);
     }
+
     .footer-note {
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="#home" onclick="showTab('home')">مكتبتي التعليمية</a>
+      <a class="brand" href="#home" onclick="showTab('home')">
+        <span class="brand-badge">
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="2.2"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(30 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        <span>مكتبتي التعليمية</span>
+      </a>
+
       <nav id="tabs">
-        <button class="active" data-tab="home" onclick="showTab('home')">الرئيسية</button>
-        <button data-tab="curriculum" onclick="showTab('curriculum')">تجارب المنهج</button>
-        <button data-tab="examples" onclick="showTab('examples')">الأمثلة المحلولة</button>
-        <button data-tab="maps" onclick="showTab('maps')">خرائط الفصول</button>
-        <button data-tab="free-lab" onclick="showTab('free-lab')">المختبر الحر</button>
-        <button data-tab="formulas" onclick="showTab('formulas')">القوانين</button>
+        <button class="active" data-tab="home" onclick="showTab('home')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+          <span>الرئيسية</span>
+        </button>
+        <button data-tab="curriculum" onclick="showTab('curriculum')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
+          <span>تجارب المنهج</span>
+        </button>
+        <button data-tab="examples" onclick="showTab('examples')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>الأمثلة المحلولة</span>
+        </button>
+        <button data-tab="maps" onclick="showTab('maps')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+          <span>خرائط الفصول</span>
+        </button>
+        <button data-tab="free-lab" onclick="showTab('free-lab')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
+          <span>المختبر الحر</span>
+        </button>
+        <button data-tab="formulas" onclick="showTab('formulas')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
+          <span>القوانين</span>
+        </button>
       </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="hero-box">
+      <div class="hero-kicker">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>منصة فيزيائية تفاعلية</span>
+      </div>
       <h1>مكتبتي التعليمية — مختبر الفيزياء التفاعلي</h1>
       <p>منصة تعليمية لتنظيم التجارب الفيزيائية، الأمثلة المحلولة، خرائط الفصول، المحاكاة الحرة، والقوانين الأساسية.</p>
     </div>
@@ -235,25 +447,51 @@
 
   <main>
     <section id="home" class="panel active">
-      <div class="section-head"><h2>نظرة عامة على الأقسام</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        <h2>نظرة عامة على الأقسام</h2>
+      </div>
       <div class="grid">
         <div class="card">
-          <span class="tag">عملي</span>
+          <div class="card-top">
+            <span class="tag">عملي</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
+            </span>
+          </div>
           <h3>تجارب المنهج</h3>
           <p>تجارب عملية منظمة مع الأدوات والخطوات والعلاقات الرياضية.</p>
         </div>
+
         <div class="card">
-          <span class="tag">تطبيق</span>
+          <div class="card-top">
+            <span class="tag teal">تطبيق</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+          </div>
           <h3>الأمثلة المحلولة</h3>
           <p>مسائل فيزيائية مشروحة خطوة بخطوة لتوضيح طريقة الحل.</p>
         </div>
+
         <div class="card">
-          <span class="tag">تنظيم</span>
+          <div class="card-top">
+            <span class="tag">تنظيم</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+            </span>
+          </div>
           <h3>خرائط الفصول</h3>
           <p>ملخصات بصرية تربط مفاهيم كل فصل ببعضها بوضوح.</p>
         </div>
+
         <div class="card">
-          <span class="tag">استكشاف</span>
+          <div class="card-top">
+            <span class="tag teal">استكشاف</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
+            </span>
+          </div>
           <h3>المختبر الحر والقوانين</h3>
           <p>تجربة تغيير المتغيرات ومراجعة القوانين الفيزيائية الأساسية.</p>
         </div>
@@ -261,16 +499,30 @@
     </section>
 
     <section id="curriculum" class="panel">
-      <div class="section-head"><h2>تجارب المنهج</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v5.5L5.5 17A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 8.5V3"></path></svg>
+        <h2>تجارب المنهج</h2>
+      </div>
       <div class="grid">
         <article class="card">
-          <span class="tag">ميكانيك</span>
+          <div class="card-top">
+            <span class="tag">ميكانيك</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
+            </span>
+          </div>
           <h3>البندول البسيط</h3>
           <p>دراسة أثر طول الخيط على الزمن الدوري للتذبذبات الصغيرة.</p>
           <div class="formula-box">$$T = 2\pi\sqrt{\frac{L}{g}}$$</div>
         </article>
+
         <article class="card">
-          <span class="tag">كهرباء</span>
+          <div class="card-top">
+            <span class="tag teal">كهرباء</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </span>
+          </div>
           <h3>قانون أوم</h3>
           <p>العلاقة بين فرق الجهد الكهربائي وشدة التيار في موصل أومي.</p>
           <div class="formula-box">$$V = I \cdot R$$</div>
@@ -279,10 +531,18 @@
     </section>
 
     <section id="examples" class="panel">
-      <div class="section-head"><h2>الأمثلة المحلولة</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <h2>الأمثلة المحلولة</h2>
+      </div>
       <div class="grid">
         <article class="card">
-          <span class="tag">حركة</span>
+          <div class="card-top">
+            <span class="tag">حركة</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
+          </div>
           <h3>حساب السرعة النهائية</h3>
           <p>جسم يبدأ من السكون بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$، فإن سرعته تصبح $v = 12\,\text{m/s}$.</p>
           <div class="formula-box">$$v = v_0 + a t$$</div>
@@ -291,15 +551,29 @@
     </section>
 
     <section id="maps" class="panel">
-      <div class="section-head"><h2>خرائط الفصول</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+        <h2>خرائط الفصول</h2>
+      </div>
       <div class="grid">
         <article class="card">
-          <span class="tag">الفصل الأول</span>
+          <div class="card-top">
+            <span class="tag">الفصل الأول</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+            </span>
+          </div>
           <h3>القياس والحركة</h3>
           <p>الوحدات الدولية $\rightarrow$ المتجهات $\rightarrow$ الإزاحة والسرعة $\rightarrow$ التسارع المنتظم.</p>
         </article>
+
         <article class="card">
-          <span class="tag">الفصل الثاني</span>
+          <div class="card-top">
+            <span class="tag teal">الفصل الثاني</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            </span>
+          </div>
           <h3>القوى وقوانين نيوتن</h3>
           <p>القصور الذاتي $\rightarrow$ محصلة القوى $\rightarrow$ الفعل ورد الفعل.</p>
         </article>
@@ -307,28 +581,54 @@
     </section>
 
     <section id="free-lab" class="panel">
-      <div class="section-head"><h2>المختبر الحر — محاكاة البندول</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="4"></line><line x1="12" y1="4" x2="12" y2="15"></line><circle cx="12" cy="17.5" r="2.5"></circle></svg>
+        <h2>المختبر الحر — محاكاة البندول</h2>
+      </div>
       <div class="sim-box">
         <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
         <div class="controls">
           <div class="control-item">
-            <label for="lengthRange">طول الخيط $L$: <span id="lengthVal">1.0</span> m</label>
+            <label for="lengthRange">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="21" y1="6" x2="3" y2="6"></line><line x1="10" y1="12" x2="3" y2="12"></line><line x1="15" y1="18" x2="3" y2="18"></line></svg>
+              <span>طول الخيط $L$: <span id="lengthVal">1.0</span> m</span>
+            </label>
             <input id="lengthRange" type="range" min="0.2" max="3.0" step="0.1" value="1.0" oninput="updatePendulum()" />
           </div>
         </div>
-        <div class="result-strip" id="periodResult">الزمن الدوري التقريبي: 2.01 ثانية</div>
+        <div class="result-strip">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+          <span id="periodResult">الزمن الدوري التقريبي: 2.01 ثانية</span>
+        </div>
       </div>
     </section>
 
     <section id="formulas" class="panel">
-      <div class="section-head"><h2>القوانين الفيزيائية</h2></div>
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18 5H9l5 7-5 7h9"></path></svg>
+        <h2>القوانين الفيزيائية</h2>
+      </div>
       <div class="grid">
         <article class="card">
-          <span class="tag">طاقة</span>
+          <div class="card-top">
+            <span class="tag">طاقة</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </span>
+          </div>
           <h3>الطاقة الحركية</h3>
           <div class="formula-box">$$K = \frac{1}{2} m v^2$$</div>
         </article>
+
         <article class="card">
+          <div class="card-top">
+            <span class="tag teal">موجات</span>
+            <span class="card-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12c2.5-4 5-4 7.5 0s5 4 7.5 0 5-4 7.5 0"></path></svg>
+            </span>
+          </div>
+          <h3>سرعة انتشار الموجة</h3>
+          <div "card">
           <span class="tag">موجات</span>
           <h3>سرعة انتشار الموجة</h3>
           <div class="formula-box">$$v = \lambda f$$</div>
