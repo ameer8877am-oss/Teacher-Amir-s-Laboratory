@@ -89,7 +89,7 @@
     .hero-box p { opacity: 0.92; max-width: 720px; font-size: 0.98rem; }
     main {
       max-width: 1040px;
-      margin: 1.5rem auto 2.5rem;
+      margin: 1.5rem auto 2rem;
       padding: 0 1rem;
     }
     .panel { display: none; }
@@ -168,10 +168,46 @@
       font-weight: 700;
     }
     footer {
+      max-width: 1040px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1rem;
+    }
+    .footer-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.25rem;
       text-align: center;
+    }
+    .footer-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+    .contact-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .contact-item {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.92rem;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-item:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .footer-note {
       color: var(--muted);
-      font-size: 0.88rem;
-      padding: 1.5rem 1rem 2.5rem;
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -206,3 +242,133 @@
           <h3>تجارب المنهج</h3>
           <p>تجارب عملية منظمة مع الأدوات والخطوات والعلاقات الرياضية.</p>
         </div>
+        <div class="card">
+          <span class="tag">تطبيق</span>
+          <h3>الأمثلة المحلولة</h3>
+          <p>مسائل فيزيائية مشروحة خطوة بخطوة لتوضيح طريقة الحل.</p>
+        </div>
+        <div class="card">
+          <span class="tag">تنظيم</span>
+          <h3>خرائط الفصول</h3>
+          <p>ملخصات بصرية تربط مفاهيم كل فصل ببعضها بوضوح.</p>
+        </div>
+        <div class="card">
+          <span class="tag">استكشاف</span>
+          <h3>المختبر الحر والقوانين</h3>
+          <p>تجربة تغيير المتغيرات ومراجعة القوانين الفيزيائية الأساسية.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="curriculum" class="panel">
+      <div class="section-head"><h2>تجارب المنهج</h2></div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">ميكانيك</span>
+          <h3>البندول البسيط</h3>
+          <p>دراسة أثر طول الخيط على الزمن الدوري للتذبذبات الصغيرة.</p>
+          <div class="formula-box">$$T = 2\pi\sqrt{\frac{L}{g}}$$</div>
+        </article>
+        <article class="card">
+          <span class="tag">كهرباء</span>
+          <h3>قانون أوم</h3>
+          <p>العلاقة بين فرق الجهد الكهربائي وشدة التيار في موصل أومي.</p>
+          <div class="formula-box">$$V = I \cdot R$$</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="examples" class="panel">
+      <div class="section-head"><h2>الأمثلة المحلولة</h2></div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">حركة</span>
+          <h3>حساب السرعة النهائية</h3>
+          <p>جسم يبدأ من السكون بتسارع ثابت $a = 3\,\text{m/s}^2$ لمدة $t = 4\,\text{s}$، فإن سرعته تصبح $v = 12\,\text{m/s}$.</p>
+          <div class="formula-box">$$v = v_0 + a t$$</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="maps" class="panel">
+      <div class="section-head"><h2>خرائط الفصول</h2></div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">الفصل الأول</span>
+          <h3>القياس والحركة</h3>
+          <p>الوحدات الدولية $\rightarrow$ المتجهات $\rightarrow$ الإزاحة والسرعة $\rightarrow$ التسارع المنتظم.</p>
+        </article>
+        <article class="card">
+          <span class="tag">الفصل الثاني</span>
+          <h3>القوى وقوانين نيوتن</h3>
+          <p>القصور الذاتي $\rightarrow$ محصلة القوى $\rightarrow$ الفعل ورد الفعل.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="free-lab" class="panel">
+      <div class="section-head"><h2>المختبر الحر — محاكاة البندول</h2></div>
+      <div class="sim-box">
+        <p>غيّر طول البندول وشاهد تغير الزمن الدوري $T$ مباشرة:</p>
+        <div class="controls">
+          <div class="control-item">
+            <label for="lengthRange">طول الخيط $L$: <span id="lengthVal">1.0</span> m</label>
+            <input id="lengthRange" type="range" min="0.2" max="3.0" step="0.1" value="1.0" oninput="updatePendulum()" />
+          </div>
+        </div>
+        <div class="result-strip" id="periodResult">الزمن الدوري التقريبي: 2.01 ثانية</div>
+      </div>
+    </section>
+
+    <section id="formulas" class="panel">
+      <div class="section-head"><h2>القوانين الفيزيائية</h2></div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">طاقة</span>
+          <h3>الطاقة الحركية</h3>
+          <div class="formula-box">$$K = \frac{1}{2} m v^2$$</div>
+        </article>
+        <article class="card">
+          <span class="tag">موجات</span>
+          <h3>سرعة انتشار الموجة</h3>
+          <div class="formula-box">$$v = \lambda f$$</div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-card">
+      <h3>إشراف وتواصل — مكتبتي التعليمية</h3>
+      <div class="contact-list">
+        <span class="contact-item">الأستاذ امير الخاقاني</span>
+        <a class="contact-item" href="tel:07818761812" dir="ltr">📞 07818761812</a>
+        <a class="contact-item" href="https://t.me/Taech_ameer" target="_blank" rel="noopener noreferrer" dir="ltr">✈️ @Taech_ameer</a>
+      </div>
+      <p class="footer-note">مكتبتي التعليمية — مختبر الفيزياء</p>
+    </div>
+  </footer>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('#tabs button').forEach(b => b.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      const btn = document.querySelector(`#tabs button[data-tab="${tabId}"]`);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
+    }
+    function updatePendulum() {
+      const L = parseFloat(document.getElementById('lengthRange').value);
+      const g = 9.81;
+      const T = 2 * Math.PI * Math.sqrt(L / g);
+      document.getElementById('lengthVal').textContent = L.toFixed(1);
+      document.getElementById('periodResult').textContent =
+        `الزمن الدوري التقريبي: ${T.toFixed(2)} ثانية`;
+    }
+  </script>
+</body>
+</html>
